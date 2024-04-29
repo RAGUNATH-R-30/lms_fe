@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import CircularProgress from "./CircularProgress";
 import userServices from "../services/userServices";
 import { ToastManager, showToast } from "./ToastManager";
+import Cookies from 'js-cookie';
 
 function Signin() {
   const navigate = useNavigate();
@@ -30,6 +31,8 @@ function Signin() {
         .login(values.email, values.password)
         .then((response) => {
             console.log(response.data)
+            console.log(response.data.token)
+            // Cookies.set('token',response.data.token)
           showToast(response.data.message);
           navigate('/dashboard')
           setprogress(false);

@@ -7,6 +7,7 @@ import Register from './components/Register'
 import Signin from './components/Signin'
 import Dashboardnav from './wrappers/Dashboardnav'
 import UploadForm from './components/UploadForm'
+import{loader as userLoader} from './components/UploadForm'
 
 
 
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
       },
       {
         path:'uploadcourse',
+        loader: userLoader,
         element:<UploadForm/>
       }
     ]

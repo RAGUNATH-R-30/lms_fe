@@ -9,4 +9,13 @@ const instance = axios.create({
         'Content-Type': 'application/json',
     },
 })
-export{instance};
+
+const protectedInstance = axios.create({
+    baseURL,
+    timeout: 5000,
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    withCredentials: true,
+});
+export{instance,protectedInstance};
