@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import userServices from "../services/userServices";
 import { useLoaderData } from "react-router-dom";
+import courseServices from "../services/courseServices";
 
 
 export async function loader() {
@@ -143,9 +144,9 @@ function UploadForm() {
         sections.section3.push({id:uuidv4(),content:items.value})
     })
 
-    console.log(sections)
-    console.log(uuidv4())
-    console.log(user)
+    // console.log(sections)
+    // console.log(uuidv4())
+    // console.log(user)
     let course = {
         mentor_id:user.data.user._id,
         author_name:user.data.user.username,
@@ -154,6 +155,14 @@ function UploadForm() {
         sections:sections
     }
     console.log(course)
+
+    courseServices.uploadcourse(course).then((response)=>{
+        console.log(response.data)
+        console.log(response.data.message)
+        console.log(response.data.createdCourse)
+    }).catch((error)=>{
+        console.log(error.response.data.message)
+    })
   };
   return (
     <>
