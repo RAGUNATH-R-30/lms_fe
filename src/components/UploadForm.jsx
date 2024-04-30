@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import userServices from "../services/userServices";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import courseServices from "../services/courseServices";
+import { useDispatch } from "react-redux";
+import { setcourse } from "../../reducers/courseSlice";
 
 
 export async function loader() {
@@ -13,7 +15,9 @@ export async function loader() {
     return { user };
 }
 function UploadForm() {
+  const dispatch = useDispatch()
    const {user} = useLoaderData();
+   const navigate = useNavigate();
   const inputArr = [
     {
       type: "text",
@@ -115,6 +119,8 @@ function UploadForm() {
   };
 
   const handleSubmit = (e) => {
+
+
     e.preventDefault();
     // console.log(e);
     // const beginnerarr = arr.map((item) => {
@@ -159,7 +165,15 @@ function UploadForm() {
     courseServices.uploadcourse(course).then((response)=>{
         console.log(response.data)
         console.log(response.data.message)
+       
         console.log(response.data.createdCourse)
+        const course = response.data.createdCourse
+
+        dispatch(
+          setcourse({course})
+        )
+        navigate("/uploadvideo")
+        
     }).catch((error)=>{
         console.log(error.response.data.message)
     })
