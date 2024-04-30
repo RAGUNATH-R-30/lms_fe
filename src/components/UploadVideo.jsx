@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import courseServices from "../services/courseServices";
 
 function UploadVideo() {
   const data = useSelector((state) => state.app);
@@ -8,6 +9,11 @@ function UploadVideo() {
   console.log(course.sections.section1);
   const handleClick = (id) => {
     console.log(id);
+    courseServices.uploadvideo({video_id:id}).then((res)=>{
+        console.log(res.data.message)
+    }).catch((error)=>{
+        console.log(error.response.data.message)
+    })
   };
   return (
     <div className="container">
@@ -27,7 +33,7 @@ function UploadVideo() {
         <div className="card-body">
           {course.sections.section1.map((item, index) => {
             return (
-              <div className="card">
+              <div className="card" key={index}>
                 <div className="row">
                   <div className="col-lg-7">
                     <div className="card-body">
@@ -39,7 +45,7 @@ function UploadVideo() {
 
                   <div className="col-lg-3">
                     <div className="mt-3 mx-2">
-                      <input class="form-control" type="file" id="formFile" />
+                      <input className="form-control" type="file" id="formFile" />
                     </div>
                   </div>
                   <div className="col-lg-2">
@@ -67,7 +73,7 @@ function UploadVideo() {
         <div className="card-body">
           {course.sections.section2.map((item, index) => {
             return (
-              <div className="card">
+              <div className="card" key={index}>
                 <div className="row">
                   <div className="col-lg-7">
                     <div className="card-body">
@@ -78,7 +84,7 @@ function UploadVideo() {
 
                   <div className="col-lg-3">
                     <div className="mt-3 mx-2">
-                      <input class="form-control" type="file" id="formFile" />
+                      <input className="form-control" type="file" id="formFile" />
                     </div>
                   </div>
 
@@ -107,7 +113,7 @@ function UploadVideo() {
         <div className="card-body">
           {course.sections.section3.map((item, index) => {
             return (
-              <div className="card">
+              <div className="card"key={index}>
                 <div className="row">
                   <div className="col-lg-7">
                     <div className="card-body">
@@ -118,7 +124,7 @@ function UploadVideo() {
                   
                   <div className="col-lg-3">
                     <div className="mt-3 mx-2">
-                      <input class="form-control" type="file" id="formFile" />
+                      <input className="form-control" type="file" id="formFile" />
                     </div>
                   </div>
 

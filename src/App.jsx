@@ -9,6 +9,8 @@ import Dashboardnav from './wrappers/Dashboardnav'
 import UploadForm from './components/UploadForm'
 import{loader as userLoader} from './components/UploadForm'
 import UploadVideo from './components/UploadVideo'
+import MyCourses from './components/MyCourses'
+import VideoPage from './components/VideoPage'
 
 
 
@@ -32,7 +34,7 @@ const router = createBrowserRouter([
     children:[
       {
         path:'mycourses',
-        element:<div>Mycourses</div>
+        element:<MyCourses/>
       },
       {
         path:'uploadcourse',
@@ -45,6 +47,10 @@ const router = createBrowserRouter([
   {
     path:'uploadvideo',
     element:<UploadVideo/>
+  },
+  {
+    path:'/video/:id',
+    element:<VideoPage/>
   }
 
  
@@ -52,6 +58,7 @@ const router = createBrowserRouter([
 
 
 function App() {
+  
   return (
     <>
     <RouterProvider router={router}/>
