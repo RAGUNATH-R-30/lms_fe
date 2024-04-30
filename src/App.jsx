@@ -10,7 +10,8 @@ import UploadForm from './components/UploadForm'
 import{loader as userLoader} from './components/UploadForm'
 import UploadVideo from './components/UploadVideo'
 import MyCourses from './components/MyCourses'
-import VideoPage from './components/VideoPage'
+import VideoPlayer from './components/VideoPlayer'
+import VideoPage from './wrappers/VideoPage'
 
 
 
@@ -48,10 +49,18 @@ const router = createBrowserRouter([
     path:'uploadvideo',
     element:<UploadVideo/>
   },
+
   {
-    path:'/video/:id',
-    element:<VideoPage/>
-  }
+    path:'/videopage',
+    element:<VideoPage/>,
+    children:[
+      {
+        path:'video/:id',
+        element:<VideoPlayer/>
+      }
+    ]
+  },
+
 
  
 ])
