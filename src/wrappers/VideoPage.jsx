@@ -13,8 +13,8 @@ function VideoPage() {
   const getallvideos = async(id)=>{
     try {
       const allvideos = await courseServices.getAllvideos({course_id:id})
-      dispatch(setvideos(allvideos.data.videos))
-      console.log(allvideos.data.videos)
+      // dispatch(setvideos(allvideos.data.videos))
+      // console.log(allvideos.data.videos)
     } catch (error) {
       console.log(error)
     }
@@ -22,6 +22,7 @@ function VideoPage() {
 
   useEffect(()=>{
     getallvideos(id)
+
   })
   return (
     <>

@@ -7,12 +7,13 @@ import { useSelector } from "react-redux";
 function VideoPlayer({activeContent}) {
     // "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
     const data = useSelector((state)=>state.app)
-    console.log(data.videos[0].video_url)
-    const [url, setUrl] = useState("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4");
+    // console.log(data)
+    // const videoUrl = data?.videos?.[0]?.video_url || '';
+    // console.log(videoUrl);
+    const [url, setUrl] = useState("");
     const { id } = useParams();
     const [key, setKey] = useState(0); // Add key state
-
-
+    // console.log(data.videos[0].video_url)
     const changeVideo = (newUrl) => {
         console.log("Changing video...");
         setUrl(newUrl);

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import courseServices from "../services/courseServices";
 import userServices from "../services/userServices";
-import { setmycourses } from "../../reducers/courseSlice";
+import { setmycourses, setvideos } from "../../reducers/courseSlice";
 import { Link } from "react-router-dom";
 function MyCourses() {
   const data = useSelector((state) => state.app);
@@ -29,8 +29,16 @@ function MyCourses() {
     }
   };
 
-  const handleClick= (id)=>{
+  const handleClick= async(id)=>{
     console.log(id)
+    try {
+      const allvideos = await courseServices.getAllvideos({course_id:id})
+      
+      dispatch(setvideos(allvideos.data.videos))
+      console.log(allvideos.data.videos)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   useEffect(() => {
