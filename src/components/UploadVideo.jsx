@@ -14,7 +14,7 @@ function UploadVideo() {
 
   const handleClick = (id) => {
     console.log(id);
-    courseServices.uploadvideo({video_id:id}).then((res)=>{
+    courseServices.uploadvideo({video_id:id,course_id:course._id}).then((res)=>{
         console.log(res.data.message)
     }).catch((error)=>{
         console.log(error.response.data.message)

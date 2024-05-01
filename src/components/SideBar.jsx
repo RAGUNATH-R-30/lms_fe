@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import courseServices from "../services/courseServices";
+import { useSelector } from "react-redux";
 
 function SideBar({setActivecontent}) {
   const { id } = useParams();
   const [course,setcourse] = useState([])
   const [sections,setsections] = useState([])
+  const data = useSelector((state)=>state.app)
+
   const getcourse = async (id) => {
     try {
       // const course = await courseServices.getCoursebyId({course_id:id})
@@ -16,7 +19,6 @@ function SideBar({setActivecontent}) {
           console.log("asdasdasdsadsada")
           const course = response.data.course
           console.log(course)
-          
           setcourse(course)
           setsections(course.sections)
         })
@@ -39,7 +41,7 @@ function SideBar({setActivecontent}) {
       <div className="accordion accordion-flush" id="accordionFlushExample">
         {
               course?.sections?.map((item,index)=>{
-            return <div className="accordion-item">
+            return <div className="accordion-item" key={index}>
             <h2 className="accordion-header">
               <button
                 className="accordion-button collapsed"
