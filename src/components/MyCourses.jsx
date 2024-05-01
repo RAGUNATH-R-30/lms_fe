@@ -46,7 +46,7 @@ function MyCourses() {
           {
             data.mycourses.map((item,index)=>{
                 return <div className="col-lg-3"key ={index}>
-                <Link to={`/videopage/video/${item._id}`} className="card" style={{width: "18rem",textDecoration:"none"}} onClick={()=>{handleClick(item._id)}}>
+                <Link to={`/videopage/${item._id}`} className="card" style={{width: "18rem",textDecoration:"none"}} onClick={()=>{handleClick(item._id)}}>
                   <div className="card-body">
                     <h5 className="card-title">{item.name}</h5>
                     <h6 className="card-subtitle mb-2 text-body-secondary">

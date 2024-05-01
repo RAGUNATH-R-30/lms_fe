@@ -4,7 +4,8 @@ export const courseSlice = createSlice({
     name:"courseslice",
     initialState:{
         course:{},
-        mycourses:[]
+        mycourses:[],
+        
     },
     reducers:{
         setcourse:(state,action)=>{

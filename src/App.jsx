@@ -51,11 +51,11 @@ const router = createBrowserRouter([
   },
 
   {
-    path:'/videopage',
+    path:'videopage/:id',
     element:<VideoPage/>,
     children:[
       {
-        path:'video/:id',
+        path:'video',
         element:<VideoPlayer/>
       }
     ]

@@ -133,27 +133,61 @@ function UploadForm() {
     //   console.log(item.value);
     // });
     
-    let sections = {
-        section1:[],
-        section2:[],
-        section3:[]
-    }
+    // let sections = {
+    //     section1:[],
+    //     section2:[],
+    //     section3:[]
+    // }
 
-    const section1_values = arr.map((items)=>{
-        sections.section1.push({id:uuidv4(),content:items.value})
-    })
+    // const section1_values = arr.map((items)=>{
+    //     sections.section1.push({id:uuidv4(),content:items.value})
+    // })
 
-    const section2_values = interarr.map((items)=>{
-        sections.section2.push({id:uuidv4(),content:items.value})
-    })
-    const section3_values = advancearr.map((items)=>{
-        sections.section3.push({id:uuidv4(),content:items.value})
-    })
+    // const section2_values = interarr.map((items)=>{
+    //     sections.section2.push({id:uuidv4(),content:items.value})
+    // })
+    // const section3_values = advancearr.map((items)=>{
+    //     sections.section3.push({id:uuidv4(),content:items.value})
+    // })
 
-    // console.log(sections)
-    // console.log(uuidv4())
-    // console.log(user)
-    let course = {
+    // // console.log(sections)
+    // // console.log(uuidv4())
+    // // console.log(user)
+    // let course = {
+    //     mentor_id:user.data.user._id,
+    //     author_name:user.data.user.username,
+    //     name:title,
+    //     description:description,
+    //     sections:[sections]
+    // }
+
+    let sections = [
+      {
+          sectionName: "Section 1",
+          sectionContent: []
+      },
+      {
+          sectionName: "Section 2",
+          sectionContent: []
+      },
+      {
+          sectionName: "Section 3",
+          sectionContent: []
+      }
+  ]
+      
+  const section1_values = arr.map((items)=>{
+      sections[0].sectionContent.push({id:uuidv4(),content:items.value})
+  })
+  
+  const section2_values = interarr.map((items)=>{
+      sections[1].sectionContent.push({id:uuidv4(),content:items.value})
+  })
+  const section3_values = advancearr.map((items)=>{
+      sections[2].sectionContent.push({id:uuidv4(),content:items.value})
+  })
+
+   let course = {
         mentor_id:user.data.user._id,
         author_name:user.data.user.username,
         name:title,

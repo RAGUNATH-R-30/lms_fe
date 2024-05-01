@@ -1,40 +1,77 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import courseServices from "../services/courseServices";
 
-function SideBar() {
+function SideBar({setActivecontent}) {
+  const { id } = useParams();
+  const [course,setcourse] = useState([])
+  const [sections,setsections] = useState([])
+  const getcourse = async (id) => {
+    try {
+      // const course = await courseServices.getCoursebyId({course_id:id})
+      console.log("GetV")
+      courseServices
+        .getCoursebyId({ course_id: id })
+        .then((response) => {
+          console.log("asdasdasdsadsada")
+          const course = response.data.course
+          console.log(course)
+          
+          setcourse(course)
+          setsections(course.sections)
+        })
+        .catch((error) => {
+          
+          console.log(error.response.data.message);
+        });
+    } catch (error) {
+
+    }
+  };
+  useEffect(() => {
+    getcourse(id);
+  }, []);
+  console.log(course)
+  console.log(sections)
   return (
     <>
-    
-    <h3>
-        Table Of Contents
-    </h3>
+      <h3>Table Of Contents</h3>
       <div className="accordion accordion-flush" id="accordionFlushExample">
-        
-        <div className="accordion-item">
-          <h2 className="accordion-header">
-            <button
-              className="accordion-button collapsed"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#flush-collapseOne"
-              aria-expanded="false"
-              aria-controls="flush-collapseOne"
+        {
+              course?.sections?.map((item,index)=>{
+            return <div className="accordion-item">
+            <h2 className="accordion-header">
+              <button
+                className="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target={`#flush-collapse${index}`}
+                aria-expanded="false"
+                aria-controls={`flush-collapse${index}`}
+              >
+                {item.sectionName}
+              </button>
+            </h2>
+  
+            <div
+              id={`flush-collapse${index}`}
+              className="accordion-collapse collapse"
+              data-bs-parent="#accordionFlushExample"
             >
-              Accordion Item #1
-            </button>
-          </h2>
-
-          <div
-            id="flush-collapseOne"
-            className="accordion-collapse collapse"
-            data-bs-parent="#accordionFlushExample"
-          >
-            <div className="accordion-body">
-              Placeholder content for this accordion, which is intended to
-              demonstrate the <code>.accordion-flush</code> className. This is
-              the first item's accordion body.
+              {
+                item.sectionContent.map((item,index)=>{
+                  return <div className="accordion-body" key={index} onClick={()=>{setActivecontent(item)}}>
+                  {item.content}
+                </div>
+                })
+                
+              }
+              
             </div>
           </div>
-        </div> 
+          })
+        }
+
       </div>
     </>
   );

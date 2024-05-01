@@ -6,7 +6,12 @@ function UploadVideo() {
   const data = useSelector((state) => state.app);
   const course = data.course.course;
   console.log(course);
-  console.log(course.sections.section1);
+  console.log(course.sections[0].section1);
+  console.log(course.sections[0].section2);
+
+  console.log(course.sections[0].section3);
+
+
   const handleClick = (id) => {
     console.log(id);
     courseServices.uploadvideo({video_id:id}).then((res)=>{
@@ -31,7 +36,7 @@ function UploadVideo() {
       <div className="card mt-5 mb-4">
         <h5 className="card-header">Beginner module</h5>
         <div className="card-body">
-          {course.sections.section1.map((item, index) => {
+          {course.sections[0].sectionContent.map((item, index) => {
             return (
               <div className="card" key={index}>
                 <div className="row">
@@ -71,7 +76,7 @@ function UploadVideo() {
       <div className="card mb-4">
         <h5 className="card-header">Intermediate Module</h5>
         <div className="card-body">
-          {course.sections.section2.map((item, index) => {
+          {course.sections[1].sectionContent.map((item, index) => {
             return (
               <div className="card" key={index}>
                 <div className="row">
@@ -111,7 +116,7 @@ function UploadVideo() {
       <div className="card">
         <h5 className="card-header">Advanced module </h5>
         <div className="card-body">
-          {course.sections.section3.map((item, index) => {
+          {course.sections[2].sectionContent.map((item, index) => {
             return (
               <div className="card"key={index}>
                 <div className="row">
