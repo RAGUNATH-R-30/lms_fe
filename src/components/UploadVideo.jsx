@@ -1,8 +1,9 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import courseServices from "../services/courseServices";
 import { useLoaderData, useParams } from "react-router-dom";
 import userServices from "../services/userServices";
+import { setcourse } from "../../reducers/courseSlice";
 
 
 // export async function loader() {
@@ -41,14 +42,18 @@ import userServices from "../services/userServices";
 // }
 function UploadVideo() {
   const data = useSelector((state) => state.app);
-  const course = data.course.course;
-  const {id} = useParams
-
+  const dispatch = useDispatch();
+  const [loading,setloading]=useState(true)
+  console.log(data)
+  const course = data?.course;
+  const {id} = useParams()
+  console.log(id)
+  console.log(data.course)
   console.log(course);
-  console.log(course.sections[0].section1);
-  console.log(course.sections[0].section2);
+  // console.log(course.sections[0].section1);
+  // console.log(course.sections[0].section2);
 
-  console.log(course.sections[0].section3);
+  // console.log(course.sections[0].section3);
 
 
   const handleClick = (id) => {
@@ -59,15 +64,53 @@ function UploadVideo() {
         console.log(error.response.data.message)
     })
   };
+
+  
+  useEffect(() => {
+    console.log("effect")
+    const fetchData = async () => {
+      console.log("fetchdata")
+      console.log(data.course)
+      if (Object.keys(data.course).length == 0) {
+        console.log("course")
+        try {
+          // Fetch course data or perform any async operation
+          console.log("effect")
+          setloading(true)
+          const response = await courseServices.getCoursebyId({ course_id: id });
+          const currentCourse = response.data.course;
+          dispatch(setcourse(currentCourse))
+          console.log(currentCourse);
+          setloading(false)
+          // Update state or do something with the data
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      }
+      else{
+        setloading(false)
+      }
+    };
+  
+
+      fetchData();
+
+  }, [data.course, id]);
+  // useEffect(()=>{
+  //   if (Object.keys(data.course).length === 0) {
+  //     console.log("Empty")
+  //   }
+  // },[])
   return (
-    <div className="container">
+<>
+{loading?<div>Loading</div>:<div className="container">
       {/* Course Details */}
       <div className="card mt-5 mb-4">
         <h5 className="card-header">Course Details</h5>
         <div className="card-body">
-          {<h5>{`Author: ${course.author_name}`}</h5>}
-          {<h5>{`Course: ${course.name}`}</h5>}
-          {<h5>{`Description: ${course.description}`}</h5>}
+          {<h5>{`Author: ${course?.author_name}`}</h5>}
+          {<h5>{`Course: ${course?.name}`}</h5>}
+          {<h5>{`Description: ${course?.description}`}</h5>}
         </div>
       </div>
 
@@ -75,7 +118,7 @@ function UploadVideo() {
       <div className="card mt-5 mb-4">
         <h5 className="card-header">Beginner module</h5>
         <div className="card-body">
-          {course.sections[0].sectionContent.map((item, index) => {
+          {course?.sections[0]?.sectionContent.map((item, index) => {
             return (
               <div className="card" key={index}>
                 <div className="row">
@@ -115,7 +158,7 @@ function UploadVideo() {
       <div className="card mb-4">
         <h5 className="card-header">Intermediate Module</h5>
         <div className="card-body">
-          {course.sections[1].sectionContent.map((item, index) => {
+          {course?.sections[1]?.sectionContent.map((item, index) => {
             return (
               <div className="card" key={index}>
                 <div className="row">
@@ -155,7 +198,7 @@ function UploadVideo() {
       <div className="card">
         <h5 className="card-header">Advanced module </h5>
         <div className="card-body">
-          {course.sections[2].sectionContent.map((item, index) => {
+          {course?.sections[2]?.sectionContent.map((item, index) => {
             return (
               <div className="card"key={index}>
                 <div className="row">
@@ -189,7 +232,10 @@ function UploadVideo() {
           })}
         </div>
       </div>
-    </div>
+    </div>}
+</>
+
+
   );
 }
 

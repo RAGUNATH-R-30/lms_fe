@@ -222,7 +222,7 @@ function UploadForm() {
         console.log(response.data.createdCourse);
         const course = response.data.createdCourse;
 
-        dispatch(setcourse({ course }));
+        dispatch(setcourse( course ));
         navigate(`/uploadvideo/${course._id}`);
         // navigate(`/uploadvideo`);
       })
