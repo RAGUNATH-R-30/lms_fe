@@ -27,7 +27,7 @@ function SideBar({setActivecontent}) {
           console.log(error.response.data.message);
         });
     } catch (error) {
-
+console.log(error)
     }
   };
   useEffect(() => {

@@ -2,12 +2,14 @@
 import { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 import courseServices from "../services/courseServices";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setvideos } from "../../reducers/courseSlice";
 
 function VideoPlayer({activeContent}) {
     // "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+    const dispatch = useDispatch()
     const data = useSelector((state)=>state.app)
-    // console.log(data)
+    console.log(data)
     // const videoUrl = data?.videos?.[0]?.video_url || '';
     // console.log(videoUrl);
     const [url, setUrl] = useState("");
@@ -28,8 +30,22 @@ function VideoPlayer({activeContent}) {
             console.log(error)
         }
     }
+    // const getAllvideos = async()=>{
+    //     try {
+    //         const allvideos = await courseServices.getAllvideos({course_id:id})
+            
+    //         dispatch(setvideos(allvideos.data.videos))
+            
+    //         console.log(allvideos.data.videos)
+    //       } catch (error) {
+    //         console.log(error)
+    //       }
+    // }
     useEffect(()=>{
         console.log(activeContent)
+        // if(data.videos.length == 0){
+        //     getAllvideos()
+        // }
         if(activeContent.id!=undefined){
 getVideoUrl(activeContent.id)
         }

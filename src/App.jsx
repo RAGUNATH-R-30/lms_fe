@@ -34,6 +34,10 @@ const router = createBrowserRouter([
     element:<Dashboardnav/>,
     children:[
       {
+        path: '', 
+        element: <MyCourses />
+      },
+      {
         path:'mycourses',
         element:<MyCourses/>
       },
@@ -46,8 +50,9 @@ const router = createBrowserRouter([
     ]
   },
   {
-    path:'uploadvideo',
-    element:<UploadVideo/>
+    path:'uploadvideo/:id',
+    element:<UploadVideo/>,
+
   },
 
   {

@@ -1,10 +1,49 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import courseServices from "../services/courseServices";
+import { useLoaderData, useParams } from "react-router-dom";
+import userServices from "../services/userServices";
 
+
+// export async function loader() {
+//   // get the currently logged in user
+//   const{id} = useParams();
+  
+//   try {
+//     const current_course = await courseServices.getCoursebyId({course_id:id}).data
+//     console.log(current_course)
+//     return {current_course}
+//   } catch (error) {
+//     console.log(error)
+//   }
+// //   try {
+// //     // const course = await courseServices.getCoursebyId({course_id:id})
+// //     console.log("GetV")
+// //     courseServices
+// //       .getCoursebyId({ course_id: id })
+// //       .then((response) => {
+// //         console.log("asdasdasdsadsada")
+// //         const course = response.data.course
+// //         console.log(course)
+// //         // setcourse(course)
+// //         // setsections(course.sections)
+// //       })
+// //       .catch((error) => {
+        
+// //         console.log(error.response.data.message);
+// //       });
+// //   } catch (error) {
+// // console.log(error)
+// //   }
+
+//   // return the user data
+//   // return { user };
+// }
 function UploadVideo() {
   const data = useSelector((state) => state.app);
   const course = data.course.course;
+  const {id} = useParams
+
   console.log(course);
   console.log(course.sections[0].section1);
   console.log(course.sections[0].section2);

@@ -1,23 +1,26 @@
 import React, { useState } from "react";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 import userServices from "../services/userServices";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import courseServices from "../services/courseServices";
 import { useDispatch } from "react-redux";
 import { setcourse } from "../../reducers/courseSlice";
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 
 export async function loader() {
-    // get the currently logged in user
-    const user = await userServices.getCurrentuser();
+  // get the currently logged in user
+  const user = await userServices.getCurrentuser();
 
-    // return the user data
-    return { user };
+  // return the user data
+  return { user };
 }
+
 function UploadForm() {
-  const dispatch = useDispatch()
-   const {user} = useLoaderData();
-   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user } = useLoaderData();
+  const navigate = useNavigate();
   const inputArr = [
     {
       type: "text",
@@ -42,8 +45,8 @@ function UploadForm() {
   const [arr, setArr] = useState(inputArr);
   const [interarr, setinterArr] = useState(inputinterArr);
   const [advancearr, setadvanceArr] = useState(inputadvanceArr);
-  const [title,settitle] = useState("")
-  const [description ,setdescription] = useState("")
+  const [title, settitle] = useState("");
+  const [description, setdescription] = useState("");
 
   const addInput = () => {
     setArr((s) => {
@@ -118,9 +121,23 @@ function UploadForm() {
     });
   };
 
+  const deleteContent = (index, setArr) => {
+    setArr((prevArr) => {
+      return prevArr.filter((_, i) => i !== index);
+    });
+  };
+  const deleteInterContent = (index) => {
+    setinterArr((prevArr) => {
+      return prevArr.filter((_, i) => i !== index);
+    });
+  };
+  
+  const deleteAdvanceContent = (index) => {
+    setadvanceArr((prevArr) => {
+      return prevArr.filter((_, i) => i !== index);
+    });
+  };
   const handleSubmit = (e) => {
-
-
     e.preventDefault();
     // console.log(e);
     // const beginnerarr = arr.map((item) => {
@@ -132,7 +149,7 @@ function UploadForm() {
     // const advancedarr = arr.map((item) => {
     //   console.log(item.value);
     // });
-    
+
     // let sections = {
     //     section1:[],
     //     section2:[],
@@ -163,54 +180,55 @@ function UploadForm() {
 
     let sections = [
       {
-          sectionName: "Section 1",
-          sectionContent: []
+        sectionName: "Section 1",
+        sectionContent: [],
       },
       {
-          sectionName: "Section 2",
-          sectionContent: []
+        sectionName: "Section 2",
+        sectionContent: [],
       },
       {
-          sectionName: "Section 3",
-          sectionContent: []
-      }
-  ]
-      
-  const section1_values = arr.map((items)=>{
-      sections[0].sectionContent.push({id:uuidv4(),content:items.value})
-  })
-  
-  const section2_values = interarr.map((items)=>{
-      sections[1].sectionContent.push({id:uuidv4(),content:items.value})
-  })
-  const section3_values = advancearr.map((items)=>{
-      sections[2].sectionContent.push({id:uuidv4(),content:items.value})
-  })
+        sectionName: "Section 3",
+        sectionContent: [],
+      },
+    ];
 
-   let course = {
-        mentor_id:user.data.user._id,
-        author_name:user.data.user.username,
-        name:title,
-        description:description,
-        sections:sections
-    }
-    console.log(course)
+    const section1_values = arr.map((items) => {
+      sections[0].sectionContent.push({ id: uuidv4(), content: items.value });
+    });
 
-    courseServices.uploadcourse(course).then((response)=>{
-        console.log(response.data)
-        console.log(response.data.message)
-       
-        console.log(response.data.createdCourse)
-        const course = response.data.createdCourse
+    const section2_values = interarr.map((items) => {
+      sections[1].sectionContent.push({ id: uuidv4(), content: items.value });
+    });
+    const section3_values = advancearr.map((items) => {
+      sections[2].sectionContent.push({ id: uuidv4(), content: items.value });
+    });
 
-        dispatch(
-          setcourse({course})
-        )
-        navigate("/uploadvideo")
-        
-    }).catch((error)=>{
-        console.log(error.response.data.message)
-    })
+    let course = {
+      mentor_id: user.data.user._id,
+      author_name: user.data.user.username,
+      name: title,
+      description: description,
+      sections: sections,
+    };
+    console.log(course);
+
+    courseServices
+      .uploadcourse(course)
+      .then((response) => {
+        console.log(response.data);
+        console.log(response.data.message);
+
+        console.log(response.data.createdCourse);
+        const course = response.data.createdCourse;
+
+        dispatch(setcourse({ course }));
+        navigate(`/uploadvideo/${course._id}`);
+        // navigate(`/uploadvideo`);
+      })
+      .catch((error) => {
+        console.log(error.response.data.message);
+      });
   };
   return (
     <>
@@ -235,8 +253,10 @@ function UploadForm() {
                     className="form-control"
                     aria-label="Sizing example input"
                     aria-describedby="inputGroup-sizing-lg"
-                      onChange={(e)=>{settitle(e.target.value)}}
-                      value={title}
+                    onChange={(e) => {
+                      settitle(e.target.value);
+                    }}
+                    value={title}
                     //   id={index}
                   />
                 </div>
@@ -245,18 +265,22 @@ function UploadForm() {
               <div className="row mt-2">
                 <div className="input-group input-group-lg">
                   <span className="input-group-text" id="inputGroup-sizing-lg">
-                  Course Description
+                    Course Description
                   </span>
                   <div className="form-floating">
                     <textarea
                       className="form-control"
                       placeholder="Leave a comment here"
                       id="floatingTextarea2"
-                      style={{height: 100}}
-                      onChange={(e)=>{setdescription(e.target.value)}}
+                      style={{ height: 100 }}
+                      onChange={(e) => {
+                        setdescription(e.target.value);
+                      }}
                       value={description}
                     ></textarea>
-                    <label htmlFor="floatingTextarea2">Course Description</label>
+                    <label htmlFor="floatingTextarea2">
+                      Course Description
+                    </label>
                   </div>
                 </div>
               </div>
@@ -276,7 +300,7 @@ function UploadForm() {
                 <div className="text-end">
                   <button
                     type="button"
-                    className="btn btn-primary"
+                    className="btn btn-outline-primary"
                     onClick={addInput}
                   >
                     Add Content
@@ -303,6 +327,13 @@ function UploadForm() {
                         value={item.value}
                         id={index}
                       />
+                      <button
+                        type="button"
+                        className="btn btn-outline-danger"
+                        onClick={() => deleteContent(index, setArr)}
+                      >
+                    <FontAwesomeIcon icon={faTrashCan} />
+                      </button>
                     </div>
                   </div>
                 );
@@ -323,7 +354,7 @@ function UploadForm() {
                 <div className="text-end">
                   <button
                     type="button"
-                    className="btn btn-primary"
+                    className="btn btn-outline-primary"
                     onClick={addInputinter}
                   >
                     Add Content
@@ -350,6 +381,14 @@ function UploadForm() {
                         value={item.value}
                         id={index}
                       />
+                      <button
+                        type="button"
+                        className="btn btn-outline-danger"
+                        onClick={() => deleteInterContent(index)}
+                      >
+                         <FontAwesomeIcon icon={faTrashCan} />
+
+                      </button>
                     </div>
                   </div>
                 );
@@ -369,7 +408,7 @@ function UploadForm() {
                 <div className="text-end">
                   <button
                     type="button"
-                    className="btn btn-primary"
+                    className="btn btn-outline-primary"
                     onClick={addInputadvance}
                   >
                     Add Content
@@ -396,6 +435,14 @@ function UploadForm() {
                         value={item.value}
                         id={index}
                       />
+                      <button
+                        type="button"
+                        className="btn btn-outline-danger"
+                        onClick={() => deleteAdvanceContent(index)}
+                      >
+                        <FontAwesomeIcon icon={faTrashCan} />
+
+                      </button>
                     </div>
                   </div>
                 );
@@ -405,9 +452,9 @@ function UploadForm() {
 
           <div className="row">
             <div className="text-center">
-            <button type="submit" className="btn btn-primary mb-4">
-            Upload Videos
-          </button>
+              <button type="submit" className="btn btn-primary mb-4">
+                Upload Videos
+              </button>
             </div>
           </div>
         </form>
@@ -514,7 +561,7 @@ export default UploadForm;
 //         }
 //         return item;
 //       });
-  
+
 //       return newArr;
 //     });
 //   };
