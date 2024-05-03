@@ -35,6 +35,7 @@ function ViewCourse() {
 
         <div className="card mt-4">
           <div className="card-body">
+          <h4 className="card-title">Sections</h4>
             <div
               className="accordion accordion-flush"
               id="accordionFlushExample"
@@ -74,6 +75,13 @@ function ViewCourse() {
             </div>
           </div>
         </div>
+        <div className="row mt-4">
+          <div className="text-center" >
+        <button type="button" className="btn btn-dark" style={{width:200,fontSize:20}}>Enroll Now</button>
+
+          </div>
+        </div>
+        
       </div>
     </>
   );

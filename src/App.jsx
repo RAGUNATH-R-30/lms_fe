@@ -25,7 +25,7 @@ import ViewCourse from './components/ViewCourse'
 const router = createBrowserRouter([
   {
     path:"/",
-    element:<div>Root</div>
+    element:<Signin/>
   },
   {
     path:"/register",

@@ -46,7 +46,7 @@ function Allcourses() {
                     <p className="card-text">
                       {item.description}
                     </p>
-                    <button type="button" className="btn btn-outline-dark"onClick={()=>{handleclick(item._id)}}>View Course</button>
+                    <button type="button" className="btn btn-outline-dark"onClick={()=>{handleclick(item._id)}}>View Details</button>
                   </div>
                 </div>
               </div>

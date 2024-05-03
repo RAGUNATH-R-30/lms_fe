@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import courseServices from "../services/courseServices";
+
 import { useSelector } from "react-redux";
 
 function SideBar({setActivecontent}) {
