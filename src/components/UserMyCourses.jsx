@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import userServices from '../services/userServices';
-import { useLoaderData } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
 import courseServices from '../services/courseServices';
 
 export async function loader() {
@@ -43,7 +43,7 @@ function UserMyCourses() {
                     <p className="card-text">
                       {item.description}
                     </p>
-                    <button type="button" className="btn btn-outline-dark">View Details</button>
+                    <Link to={`/videopage/${item._id}`} type="button" className="btn btn-outline-dark">View Course</Link>
                   </div>
                 </div>
               </div>

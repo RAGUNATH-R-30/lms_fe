@@ -20,6 +20,7 @@ import UserMyCourses from './components/UserMyCourses'
 import ViewCourse from './components/ViewCourse'
 import {loader as currentuserLoader} from './components/ViewCourse'
 import{loader as usercoursesLoader} from './components/UserMyCourses'
+import Quiz from './components/Quiz'
 
 
 
@@ -106,6 +107,10 @@ const router = createBrowserRouter([
     path:'viewcourse/:id',
     element:<ViewCourse/>,
     loader:currentuserLoader
+  },
+  {
+    path:'quiz',
+    element:<Quiz/>
   }
 
  
