@@ -27,6 +27,13 @@ const courseServices = {
     },
     getAllcourses:async()=>{
         return await protectedInstance.get('users/course/getallcourses')
+    },
+    enrollCourse:async(values)=>{
+        return await protectedInstance.post('users/course/enrollcourse',values)
+    },
+    getUsercourses:async(values)=>{
+        return await protectedInstance.post('users/course/getusercourses',values)
     }
+    
 }
 export default courseServices;

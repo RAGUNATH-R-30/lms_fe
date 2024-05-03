@@ -18,6 +18,8 @@ import Userdashboardnav from './wrappers/Userdashboardnav'
 import Allcourses from './components/Allcourses'
 import UserMyCourses from './components/UserMyCourses'
 import ViewCourse from './components/ViewCourse'
+import {loader as currentuserLoader} from './components/ViewCourse'
+import{loader as usercoursesLoader} from './components/UserMyCourses'
 
 
 
@@ -96,12 +98,14 @@ const router = createBrowserRouter([
       {
         path:'usermycourses',
         element:<UserMyCourses/>,
+        loader: usercoursesLoader,
       },
     ]
   },
   {
     path:'viewcourse/:id',
-    element:<ViewCourse/>
+    element:<ViewCourse/>,
+    loader:currentuserLoader
   }
 
  
