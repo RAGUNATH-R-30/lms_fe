@@ -12,6 +12,12 @@ import UploadVideo from './components/UploadVideo'
 import MyCourses from './components/MyCourses'
 import VideoPlayer from './components/VideoPlayer'
 import VideoPage from './wrappers/VideoPage'
+import Mentorregister from './components/Mentorregister'
+import Mentorsignin from './components/Mentorsignin'
+import Userdashboardnav from './wrappers/Userdashboardnav'
+import Allcourses from './components/Allcourses'
+import UserMyCourses from './components/UserMyCourses'
+import ViewCourse from './components/ViewCourse'
 
 
 
@@ -29,6 +35,16 @@ const router = createBrowserRouter([
     path:"/login",
     element:<Signin/>
   },
+
+  {
+    path:"/mentorregister",
+    element:<Mentorregister/>
+  },
+  {
+    path:"/mentorlogin",
+    element:<Mentorsignin/>
+  },
+
   {
     path:'dashboard',
     element:<Dashboardnav/>,
@@ -65,7 +81,28 @@ const router = createBrowserRouter([
       }
     ]
   },
-
+  {
+    path:'/userdashboard',
+    element:<Userdashboardnav/>,
+    children:[
+      {
+        path:'',
+        element:<Allcourses/>
+      },
+      {
+        path:'allcourses',
+        element:<Allcourses/>,
+      },
+      {
+        path:'usermycourses',
+        element:<UserMyCourses/>,
+      },
+    ]
+  },
+  {
+    path:'viewcourse/:id',
+    element:<ViewCourse/>
+  }
 
  
 ])

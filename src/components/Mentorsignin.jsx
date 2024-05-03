@@ -6,7 +6,7 @@ import userServices from "../services/userServices";
 import { ToastManager, showToast } from "./ToastManager";
 import Cookies from 'js-cookie';
 
-function Signin() {
+function Mentorsignin() {
   const navigate = useNavigate();
   const [progress, setprogress] = useState(false);
   const [invalidcred, setinvalidcred] = useState(false);
@@ -28,13 +28,13 @@ function Signin() {
     onSubmit: (values) => {
       setprogress(true);
       userServices
-        .login(values.email, values.password)
+        .mentorLogin(values.email, values.password)
         .then((response) => {
             console.log(response.data)
             console.log(response.data.token)
             // Cookies.set('token',response.data.token)
           showToast(response.data.message);
-          navigate('/userdashboard')
+          navigate('/dashboard')
           setprogress(false);
         })
         .catch((error) => {
@@ -52,7 +52,7 @@ function Signin() {
     >
       <div className="card" style={{ width: "350px" }}>
         <div className="card-body">
-          <h5 className="card-title text-center mb-3">Login</h5>
+          <h5 className="card-title text-center mb-3">Mentor Login</h5>
           <form onSubmit={formik.handleSubmit}>
             <div className="form-floating mb-3">
               <input
@@ -129,4 +129,4 @@ function Signin() {
   );
 }
 
-export default Signin;
+export default Mentorsignin;

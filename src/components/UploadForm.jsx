@@ -11,15 +11,15 @@ import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 
 export async function loader() {
   // get the currently logged in user
-  const user = await userServices.getCurrentuser();
+  const mentor = await userServices.getCurrentMentor();
 
   // return the user data
-  return { user };
+  return { mentor };
 }
 
 function UploadForm() {
   const dispatch = useDispatch();
-  const { user } = useLoaderData();
+  const { mentor } = useLoaderData();
   const navigate = useNavigate();
   const inputArr = [
     {
@@ -205,8 +205,8 @@ function UploadForm() {
     });
 
     let course = {
-      mentor_id: user.data.user._id,
-      author_name: user.data.user.username,
+      mentor_id: mentor.data.mentor._id,
+      author_name: mentor.data.mentor.username,
       name: title,
       description: description,
       sections: sections,

@@ -5,7 +5,8 @@ export const courseSlice = createSlice({
     initialState:{
         course:{},
         mycourses:[],
-        videos:[]
+        videos:[],
+        allcourses:[]
     },
     reducers:{
         setcourse:(state,action)=>{
@@ -22,8 +23,13 @@ export const courseSlice = createSlice({
             state.videos = action.payload
             console.log(state.videos)
             return state
+        },
+        setallcourses:(state,action)=>{
+            state.allcourses = action.payload
+            console.log(state.allcourses)
+            return state
         }
     }
     
 })
-export const {setcourse,setmycourses,setvideos} = courseSlice.actions;
+export const {setcourse,setmycourses,setvideos,setallcourses} = courseSlice.actions;

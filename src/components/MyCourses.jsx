@@ -10,11 +10,11 @@ function MyCourses() {
 
   const getCourses = async () => {
     try {
-      const user = await userServices.getCurrentuser();
-      const user_id = user.data.user._id;
-      console.log(user);
+      const mentor = await userServices.getCurrentMentor();
+      const mentor_id = mentor.data.mentor._id;
+      console.log(mentor);
       courseServices
-        .getMycourses({ mentor_id: user_id })
+        .getMycourses({ mentor_id: mentor_id })
         .then((res) => {
           const mycourses = res.data.myCourses;
           dispatch(setmycourses(mycourses));

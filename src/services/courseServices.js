@@ -14,6 +14,7 @@ const courseServices = {
 
     },
     getCoursebyId:async(values)=>{
+        console.log(values)
         return await protectedInstance.post('users/course/getcoursebyid',values)
     },
     getVideoUrl:async(values)=>{
@@ -23,6 +24,9 @@ const courseServices = {
     getAllvideos:async(values)=>{
         console.log(values)
         return await protectedInstance.post('users/course/getallvideos',values)
+    },
+    getAllcourses:async()=>{
+        return await protectedInstance.get('users/course/getallcourses')
     }
 }
 export default courseServices;

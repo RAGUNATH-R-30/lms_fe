@@ -5,11 +5,23 @@ const userServices = {
         console.log(email)
         return await instance.post('/users/register',{email,username,password})
     },
+    mentorRegister:async(email,username,password)=>{
+        console.log(email)
+        return await instance.post('/users/mentorregister',{email,username,password})
+    },
+    mentorLogin:async(email,password)=>{
+        return await instance.post('users/mentorlogin',{email,password},{ withCredentials: true })
+    }
+    ,
     login:async(email,password)=>{
         return await instance.post('users/login',{email,password},{ withCredentials: true })
     },
     getCurrentuser:async()=>{
         return await protectedInstance.get('users/me')
+    },
+    getCurrentMentor:async()=>{
+        return await protectedInstance.get('users/mentorme')
+
     }
 
 }
