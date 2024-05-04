@@ -44,28 +44,97 @@ function UploadVideo() {
   const data = useSelector((state) => state.app);
   const dispatch = useDispatch();
   const [loading,setloading]=useState(true)
-  console.log(data)
+  const [selectedFiles, setSelectedFiles] = useState({});
+  // console.log(data)
   const course = data?.course;
   const {id} = useParams()
-  console.log(id)
-  console.log(data.course)
-  console.log(course);
+  // console.log(id)
+  // console.log(data.course)
+  // console.log(course);
+  console.log(selectedFiles)
+
   // console.log(course.sections[0].section1);
   // console.log(course.sections[0].section2);
 
   // console.log(course.sections[0].section3);
 
 
-  const handleClick = (id) => {
-    console.log(id);
-    courseServices.uploadvideo({video_id:id,course_id:course._id}).then((res)=>{
-        console.log(res.data.message)
-    }).catch((error)=>{
-        console.log(error.response.data.message)
-    })
-  };
+  // const handleClick = (id) => {
+  //   console.log(id);
+  //   courseServices.uploadvideo({video_id:id,course_id:course._id}).then((res)=>{
+  //       console.log(res.data.message)
+  //   }).catch((error)=>{
+  //       console.log(error.response.data.message)
+  //   })
+  // };
 
-  
+  // const handlefilechange = (e) => {
+  //   console.log(e.target.files)
+  //   setSelectedFile(e.target.files);
+  //   console.log(selectedFile)
+  // };
+  const handleFileChange = (e, sectionId) => {
+    console.log(sectionId)
+    setSelectedFiles({
+      ...selectedFiles,
+      [sectionId]: e.target.files[0]
+    });
+  };
+  const handleClick = async (sectionId) => {
+    const file = selectedFiles[sectionId];
+    console.log(selectedFiles)
+    // console.log(selectedFiles[sectionId])
+
+    // if (!file) {
+    //   alert("Please select a file");
+    //   return;
+    // }
+
+    try {
+      const formData = new FormData();
+      console.log(file.name)
+      formData.append("video",file);
+      formData.append("video_id", sectionId);
+        formData.append("course_id", course._id);
+      console.log(formData.get('video'))
+
+      const response = await courseServices.uploadvideo(formData);
+      // const response = await courseServices.uploadvideo({
+      //   video:formData,
+      //   video_id:sectionId,
+      // course_id:course._id
+      // });
+      console.log(response.data.message);
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
+  };
+  // const handleClick = async (sectionId) => {
+  //   if (!selectedFiles) {
+  //     alert('Please select a file');
+  //     return;
+  //   }
+
+  //   // setUploading(true);
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append('video', selectedFiles); // Append the selected file to FormData
+  //     console.log(selectedFile)
+  //     console.log(formData)
+  //     // Upload video with the section ID and course ID
+  //     // const response = await courseServices.uploadVideo({
+  //     //   video: formData,
+  //     //   sectionId,
+  //     //   courseId: course._id,
+  //     // });
+  //     // console.log(response.data.message);
+  //   } catch (error) {
+  //     console.log(error.response.data.message);
+  //   } finally {
+  //     // setUploading(false);
+  //   }
+  // };
+
   useEffect(() => {
     console.log("effect")
     const fetchData = async () => {
@@ -75,12 +144,12 @@ function UploadVideo() {
         console.log("course")
         try {
           // Fetch course data or perform any async operation
-          console.log("effect")
+          // console.log("effect")
           setloading(true)
           const response = await courseServices.getCoursebyId({ course_id: id });
           const currentCourse = response.data.course;
           dispatch(setcourse(currentCourse))
-          console.log(currentCourse);
+          // console.log(currentCourse);
           setloading(false)
           // Update state or do something with the data
         } catch (error) {
@@ -118,6 +187,7 @@ function UploadVideo() {
       <div className="card mt-5 mb-4">
         <h5 className="card-header">Beginner module</h5>
         <div className="card-body">
+     
           {course?.sections[0]?.sectionContent.map((item, index) => {
             return (
               <div className="card" key={index}>
@@ -132,14 +202,18 @@ function UploadVideo() {
 
                   <div className="col-lg-3">
                     <div className="mt-3 mx-2">
-                      <input className="form-control" type="file" id="formFile" />
+                      <input className="form-control" type="file" id="formFile" onChange={(e) => {
+                        console.log(item)
+                        handleFileChange(e, item.id)
+                        }}/>
                     </div>
                   </div>
                   <div className="col-lg-2">
                     <div className="card-body">
                       <button
-                        type="button"
+                        type="submit"
                         className="btn btn-primary"
+                        // onClick={() => handleClick(item.id)}
                         onClick={() => handleClick(item.id)}
                       >
                         Upload Video
@@ -150,6 +224,7 @@ function UploadVideo() {
               </div>
             );
           })}
+
         </div>
       </div>
 
@@ -171,7 +246,7 @@ function UploadVideo() {
 
                   <div className="col-lg-3">
                     <div className="mt-3 mx-2">
-                      <input className="form-control" type="file" id="formFile" />
+                      <input className="form-control" type="file" id="formFile" onChange={(e) => handleFileChange(e, item.id)} />
                     </div>
                   </div>
 
@@ -211,7 +286,7 @@ function UploadVideo() {
                   
                   <div className="col-lg-3">
                     <div className="mt-3 mx-2">
-                      <input className="form-control" type="file" id="formFile" />
+                      <input className="form-control" type="file" id="formFile" onChange={(e) => handleFileChange(e, item.id)}/>
                     </div>
                   </div>
 

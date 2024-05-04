@@ -4,8 +4,14 @@ const courseServices = {
     uploadcourse:async(values)=>{
         return await protectedInstance.post('users/course/uploadcourse',values)
     },
-    uploadvideo:async(values)=>{
-        return await protectedInstance.post('users/course/uploadvideo',values)
+    uploadvideo:async(formData)=>{
+        // console.log(values)
+
+        return await protectedInstance.post('users/course/uploadvideo',formData,{
+            headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+        })
 
     },
     getMycourses:async(values)=>{
