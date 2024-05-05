@@ -46,6 +46,7 @@ function UploadForm() {
   const [interarr, setinterArr] = useState(inputinterArr);
   const [advancearr, setadvanceArr] = useState(inputadvanceArr);
   const [title, settitle] = useState("");
+  const [price,setprice] = useState("")
   const [description, setdescription] = useState("");
 
   const addInput = () => {
@@ -210,6 +211,7 @@ function UploadForm() {
       name: title,
       description: description,
       sections: sections,
+      price:price
     };
     console.log(course);
 
@@ -240,7 +242,7 @@ function UploadForm() {
               className="card-header"
               style={{ fontWeight: "bold", fontSize: 18 }}
             >
-              Beginner Module
+              Course Details
             </div>
             <div className="card-body">
               <div className="row mt-2">
@@ -282,6 +284,25 @@ function UploadForm() {
                       Course Description
                     </label>
                   </div>
+                </div>
+              </div>
+              <div className="row mt-2">
+                <div className="input-group input-group-lg">
+                  <span className="input-group-text" id="inputGroup-sizing-lg">
+                    Price
+                  </span>
+                  <input
+                    type="number"
+                    className="form-control"
+                    aria-label="Sizing example input"
+                    aria-describedby="inputGroup-sizing-lg"
+                    min="0" step="any"
+                    onChange={(e) => {
+                      setprice(e.target.value);
+                    }}
+                    value={price}
+                    //   id={index}
+                  />
                 </div>
               </div>
             </div>
