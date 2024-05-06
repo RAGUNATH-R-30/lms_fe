@@ -43,9 +43,12 @@ function Allcourses() {
                     <h6 className="card-subtitle mb-2 text-body-secondary">
                       {item.author_name}
                     </h6>
-                    <p className="card-text">
+                    <span className="card-text">
                       {item.description}
-                    </p>
+                    </span>
+                    <br />
+                    <b style={{fontSize:20}}>₹ {item.price}</b>
+                    <br />
                     <button type="button" className="btn btn-outline-dark"onClick={()=>{handleclick(item._id)}}>View Details</button>
                   </div>
                 </div>

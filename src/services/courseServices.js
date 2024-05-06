@@ -34,7 +34,12 @@ const courseServices = {
     getAllcourses:async()=>{
         return await protectedInstance.get('users/course/getallcourses')
     },
+    coursePayment:async(values)=>{
+        return await protectedInstance.post('users/payment/checkout',values)
+        // return await protectedInstance.post('users/course/enrollcourse',values)
+    },
     enrollCourse:async(values)=>{
+        // return await protectedInstance.post('users/payment/checkout',values)
         return await protectedInstance.post('users/course/enrollcourse',values)
     },
     getUsercourses:async(values)=>{

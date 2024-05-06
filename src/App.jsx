@@ -21,6 +21,9 @@ import ViewCourse from './components/ViewCourse'
 import {loader as currentuserLoader} from './components/ViewCourse'
 import{loader as usercoursesLoader} from './components/UserMyCourses'
 import Quiz from './components/Quiz'
+import Success from './components/success'
+import success from './components/success'
+import Failure from './components/Failure'
 
 
 
@@ -111,6 +114,14 @@ const router = createBrowserRouter([
   {
     path:'quiz',
     element:<Quiz/>
+  },
+  {
+    path:'success/:payment_id',
+    element:<Success/>
+  },
+  {
+    path:'failure/:payment_id',
+    element:<Failure/>
   }
 
  

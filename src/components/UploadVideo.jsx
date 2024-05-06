@@ -109,31 +109,6 @@ function UploadVideo() {
       console.log(error.response.data.message);
     }
   };
-  // const handleClick = async (sectionId) => {
-  //   if (!selectedFiles) {
-  //     alert('Please select a file');
-  //     return;
-  //   }
-
-  //   // setUploading(true);
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append('video', selectedFiles); // Append the selected file to FormData
-  //     console.log(selectedFile)
-  //     console.log(formData)
-  //     // Upload video with the section ID and course ID
-  //     // const response = await courseServices.uploadVideo({
-  //     //   video: formData,
-  //     //   sectionId,
-  //     //   courseId: course._id,
-  //     // });
-  //     // console.log(response.data.message);
-  //   } catch (error) {
-  //     console.log(error.response.data.message);
-  //   } finally {
-  //     // setUploading(false);
-  //   }
-  // };
 
   useEffect(() => {
     console.log("effect")
