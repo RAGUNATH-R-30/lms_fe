@@ -45,6 +45,7 @@ function UploadVideo() {
   const dispatch = useDispatch();
   const [loading,setloading]=useState(true)
   const [selectedFiles, setSelectedFiles] = useState({});
+  const [uploadedVideos, setUploadedVideos] = useState({}); 
   // console.log(data)
   const course = data?.course;
   const {id} = useParams()
@@ -82,13 +83,10 @@ function UploadVideo() {
   };
   const handleClick = async (sectionId) => {
     const file = selectedFiles[sectionId];
-    console.log(selectedFiles)
-    // console.log(selectedFiles[sectionId])
-
-    // if (!file) {
-    //   alert("Please select a file");
-    //   return;
-    // }
+    if(!file){
+      alert("Choose file")
+    }
+    else{
 
     try {
       const formData = new FormData();
@@ -99,15 +97,15 @@ function UploadVideo() {
       console.log(formData.get('video'))
 
       const response = await courseServices.uploadvideo(formData);
-      // const response = await courseServices.uploadvideo({
-      //   video:formData,
-      //   video_id:sectionId,
-      // course_id:course._id
-      // });
+      setUploadedVideos({
+        ...uploadedVideos,
+        [sectionId]: true // Mark section as uploaded
+      });
       console.log(response.data.message);
     } catch (error) {
       console.log(error.response.data.message);
     }
+  }
   };
 
   useEffect(() => {
@@ -140,11 +138,6 @@ function UploadVideo() {
       fetchData();
 
   }, [data.course, id]);
-  // useEffect(()=>{
-  //   if (Object.keys(data.course).length === 0) {
-  //     console.log("Empty")
-  //   }
-  // },[])
   return (
 <>
 {loading?<div>Loading</div>:<div className="container">
@@ -190,8 +183,9 @@ function UploadVideo() {
                         className="btn btn-primary"
                         // onClick={() => handleClick(item.id)}
                         onClick={() => handleClick(item.id)}
+                        disabled={uploadedVideos[item.id]} 
                       >
-                        Upload Video
+                     {uploadedVideos[item.id] ? 'Video Uploaded' : 'Upload Video'}
                       </button>
                     </div>
                   </div>
@@ -231,8 +225,9 @@ function UploadVideo() {
                         type="button"
                         className="btn btn-primary"
                         onClick={() => handleClick(item.id)}
+                        disabled={uploadedVideos[item.id]} 
                       >
-                        Upload Video
+                     {uploadedVideos[item.id] ? 'Video Uploaded' : 'Upload Video'}
                       </button>
                     </div>
                   </div>
@@ -271,8 +266,9 @@ function UploadVideo() {
                         type="button"
                         className="btn btn-primary"
                         onClick={() => handleClick(item.id)}
+                        disabled={uploadedVideos[item.id]} 
                       >
-                        Upload Video
+                       {uploadedVideos[item.id] ? 'Video Uploaded' : 'Upload Video'}
                       </button>
                     </div>
                   </div>
