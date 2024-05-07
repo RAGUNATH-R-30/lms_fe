@@ -1,25 +1,10 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-// const quizData = [
-//   {
-//     question: "What is the capital of France?",
-//     options: ["London", "Paris", "Berlin", "Madrid"],
-//     correctAnswer: "Paris",
-//   },
-//   {
-//     question: "What is 2 + 2?",
-//     options: ["3", "4", "5", "6"],
-//     correctAnswer: "4",
-//   },
-//   {
-//     question: "What is 2 + 2?",
-//     options: ["3", "4", "5", "6"],
-//     correctAnswer: "4",
-//   },
-//   // Add more questions as needed
-// ];
-const quizData = [
+
+const Quiz = () => {
+
+  const quizData = [
   {
       "question": "what is the correct syntax for body tag opening?",
       "options": [
@@ -39,104 +24,82 @@ const quizData = [
       "correctAnswer": "<input>"
   }
 ]
-const Quiz = () => {
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [score, setScore] = useState(0);
-  const [showScore, setShowScore] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [answers, setAnswers] = useState(Array(quizData.length).fill('')); // Store selected answers
+  const [showResult, setShowResult] = useState(false);
 
-  const handleAnswerOptionClick = () => {
-    if (selectedOption === quizData[currentQuestion].correctAnswer) {
-      setScore(score + 1);
-    }
+  const handleAnswerChange = (index, selectedOption) => {
+    const newAnswers = [...answers];
+    newAnswers[index] = selectedOption;
+    setAnswers(newAnswers);
   };
 
-  const handleNextButtonClick = () => {
-    handleAnswerOptionClick();
-    const nextQuestion = currentQuestion + 1;
-    if (nextQuestion < quizData.length) {
-      setCurrentQuestion(nextQuestion);
-      setSelectedOption(null);
-    } else {
-      setShowScore(true);
-    }
-  };
-
-  const handlePreviousButtonClick = () => {
-    const previousQuestion = currentQuestion - 1;
-    if (previousQuestion >= 0) {
-      setCurrentQuestion(previousQuestion);
-      setSelectedOption(null);
-    }
+  const handleSubmit = () => {
+    setShowResult(true);
+    // You can add more sophisticated scoring logic here if needed
   };
 
   const resetQuiz = () => {
-    setCurrentQuestion(0);
-    setScore(0);
-    setShowScore(false);
-    setSelectedOption(null);
+    setAnswers(Array(quizData.length).fill(''));
+    setShowResult(false);
   };
 
   return (
     <div className="container">
       <div className="row justify-content-center mt-5">
         <div className="col-md-8">
-          {showScore ? (
-            <div className="card text-center">
-              <div className="card-body">
-                <h5 className="card-title">Quiz Completed!</h5>
-                <p className="card-text">
-                  You scored {score} out of {quizData.length}.
-                </p>
-                <button className="btn btn-primary" onClick={resetQuiz}>
-                  Restart Quiz
-                </button>
-              </div>
+          <div className="card">
+            <div className="card-header">
+              {showResult ? 'Quiz Result' : 'Quiz Questions'}
             </div>
-          ) : (
-            <div className="card">
-              <div className="card-header">
-                Question {currentQuestion + 1}/{quizData.length}
-              </div>
-              <div className="card-body">
-                <h5 className="card-title">
-                  {quizData[currentQuestion].question}
-                </h5>
+            <div className="card-body">
+              {showResult ? (
                 <div>
-                  {quizData[currentQuestion].options.map((option, index) => (
-                    <div key={index} className="form-check">
-                      <input
-                        type="radio"
-                        className="form-check-input"
-                        id={`option${index}`}
-                        value={option}
-                        checked={selectedOption === option}
-                        onChange={() => setSelectedOption(option)}
-                      />
-                      <label className="form-check-label" htmlFor={`option${index}`}>
-                        {option}
-                      </label>
+                  {quizData.map((question, index) => (
+                    <div key={index} className="mb-3">
+                      <h5>{question.question}</h5>
+                      <p>Your answer: {answers[index]}</p>
+                      <p>Correct answer: {question.correctAnswer}</p>
                     </div>
                   ))}
-                </div>
-                <div className="mt-3">
-                  <button
-                    className="btn btn-primary mr-2"
-                    onClick={handlePreviousButtonClick}
-                    disabled={currentQuestion === 0}
-                  >
-                    Previous
-                  </button>
-                  <button
-                    className="btn btn-primary"
-                    onClick={handleNextButtonClick}
-                  >
-                    Next
+                  <p>
+                    Total Score: {answers.filter((answer, index) => answer === quizData[index].correctAnswer).length} / {quizData.length}
+                  </p>
+                  <button className="btn btn-primary mr-2" onClick={resetQuiz}>
+                    Restart Quiz
                   </button>
                 </div>
-              </div>
+              ) : (
+                <div>
+                  {quizData.map((question, index) => (
+                    <div key={index} className="mb-3">
+                      <h5>{question.question}</h5>
+                      {question.options.map((option, optionIndex) => (
+                        <div key={optionIndex} className="form-check">
+                          <input
+                            type="radio"
+                            className="form-check-input"
+                            id={`question${index}_option${optionIndex}`}
+                            value={option}
+                            checked={answers[index] === option}
+                            onChange={() => handleAnswerChange(index, option)}
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor={`question${index}_option${optionIndex}`}
+                          >
+                            {option}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                  ))}
+                  <button className="btn btn-primary" onClick={handleSubmit}>
+                    Submit
+                  </button>
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
       </div>
     </div>
@@ -144,6 +107,150 @@ const Quiz = () => {
 };
 
 export default Quiz;
+
+// const quizData = [
+//   {
+//     question: "What is the capital of France?",
+//     options: ["London", "Paris", "Berlin", "Madrid"],
+//     correctAnswer: "Paris",
+//   },
+//   {
+//     question: "What is 2 + 2?",
+//     options: ["3", "4", "5", "6"],
+//     correctAnswer: "4",
+//   },
+//   {
+//     question: "What is 2 + 2?",
+//     options: ["3", "4", "5", "6"],
+//     correctAnswer: "4",
+//   },
+//   // Add more questions as needed
+// ];
+// const quizData = [
+//   {
+//       "question": "what is the correct syntax for body tag opening?",
+//       "options": [
+//           "body",
+//           "<body>",
+//           "<body/>"
+//       ],
+//       "correctAnswer": "<body>"
+//   },
+//   {
+//       "question": "what is the correct syntax for input tag opening?",
+//       "options": [
+//           "input ",
+//           "<input>",
+//           "<input/>"
+//       ],
+//       "correctAnswer": "<input>"
+//   }
+// ]
+// const Quiz = () => {
+//   const [currentQuestion, setCurrentQuestion] = useState(0);
+//   const [score, setScore] = useState(0);
+//   const [showScore, setShowScore] = useState(false);
+//   const [selectedOption, setSelectedOption] = useState(null);
+
+//   const handleAnswerOptionClick = () => {
+//     if (selectedOption === quizData[currentQuestion].correctAnswer) {
+//       setScore(score + 1);
+//     }
+//   };
+
+//   const handleNextButtonClick = () => {
+//     handleAnswerOptionClick();
+//     const nextQuestion = currentQuestion + 1;
+//     if (nextQuestion < quizData.length) {
+//       setCurrentQuestion(nextQuestion);
+//       setSelectedOption(null);
+//     } else {
+//       setShowScore(true);
+//     }
+//   };
+
+//   const handlePreviousButtonClick = () => {
+//     const previousQuestion = currentQuestion - 1;
+//     if (previousQuestion >= 0) {
+//       setCurrentQuestion(previousQuestion);
+//       setSelectedOption(null);
+//     }
+//   };
+
+//   const resetQuiz = () => {
+//     setCurrentQuestion(0);
+//     setScore(0);
+//     setShowScore(false);
+//     setSelectedOption(null);
+//   };
+
+//   return (
+//     <div className="container">
+//       <div className="row justify-content-center mt-5">
+//         <div className="col-md-8">
+//           {showScore ? (
+//             <div className="card text-center">
+//               <div className="card-body">
+//                 <h5 className="card-title">Quiz Completed!</h5>
+//                 <p className="card-text">
+//                   You scored {score} out of {quizData.length}.
+//                 </p>
+//                 <button className="btn btn-primary" onClick={resetQuiz}>
+//                   Restart Quiz
+//                 </button>
+//               </div>
+//             </div>
+//           ) : (
+//             <div className="card">
+//               <div className="card-header">
+//                 Question {currentQuestion + 1}/{quizData.length}
+//               </div>
+//               <div className="card-body">
+//                 <h5 className="card-title">
+//                   {quizData[currentQuestion].question}
+//                 </h5>
+//                 <div>
+//                   {quizData[currentQuestion].options.map((option, index) => (
+//                     <div key={index} className="form-check">
+//                       <input
+//                         type="radio"
+//                         className="form-check-input"
+//                         id={`option${index}`}
+//                         value={option}
+//                         checked={selectedOption === option}
+//                         onChange={() => setSelectedOption(option)}
+//                       />
+//                       <label className="form-check-label" htmlFor={`option${index}`}>
+//                         {option}
+//                       </label>
+//                     </div>
+//                   ))}
+//                 </div>
+//                 <div className="mt-3">
+//                   <button
+//                     className="btn btn-primary mr-2"
+//                     onClick={handlePreviousButtonClick}
+//                     disabled={currentQuestion === 0}
+//                   >
+//                     Previous
+//                   </button>
+//                   <button
+//                     className="btn btn-primary"
+//                     onClick={handleNextButtonClick}
+//                   >
+//                     Next
+//                   </button>
+//                 </div>
+//               </div>
+//             </div>
+//           )}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Quiz;
 
 
 

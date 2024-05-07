@@ -114,9 +114,16 @@ function SideBar({ setActivecontent }) {
                         }}
                       >
                         <div>{item.content}</div>
-                        <button type="button" className="btn btn-primary">
+                        <div>
+                        <button type="button" className="btn btn-primary"
+                        onClick={(e)=>{
+                          e.preventDefault();
+                          e.stopPropagation();
+                          console.log(item.id)
+                        }}>
                           Take Quiz
                         </button>
+                        </div>
                       </div>
                     </div>
                   );
