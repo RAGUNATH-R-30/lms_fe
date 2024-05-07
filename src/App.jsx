@@ -24,6 +24,7 @@ import Quiz from './components/Quiz'
 import Success from './components/success'
 import success from './components/success'
 import Failure from './components/Failure'
+import Quizupload from './components/Quizupload'
 
 
 
@@ -122,6 +123,10 @@ const router = createBrowserRouter([
   {
     path:'failure/:payment_id',
     element:<Failure/>
+  },
+  {
+    path:'/quizupload/:id',
+    element:<Quizupload/>
   }
 
  

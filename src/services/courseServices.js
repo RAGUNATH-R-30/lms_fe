@@ -44,6 +44,13 @@ const courseServices = {
     },
     getUsercourses:async(values)=>{
         return await protectedInstance.post('users/course/getusercourses',values)
+    },
+    createQuiz:async(values)=>{
+        console.log(values)
+        return await protectedInstance.post('users/course/createquiz',values)
+    },
+    getUserprogress:async(values)=>{
+        return await protectedInstance.post('users/course/getuserprogress',values)
     }
     
 }

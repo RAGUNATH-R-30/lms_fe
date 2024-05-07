@@ -21,7 +21,6 @@ const userServices = {
     },
     getCurrentMentor:async()=>{
         return await protectedInstance.get('users/mentorme')
-
     }
 
 }

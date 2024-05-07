@@ -1,25 +1,44 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+// const quizData = [
+//   {
+//     question: "What is the capital of France?",
+//     options: ["London", "Paris", "Berlin", "Madrid"],
+//     correctAnswer: "Paris",
+//   },
+//   {
+//     question: "What is 2 + 2?",
+//     options: ["3", "4", "5", "6"],
+//     correctAnswer: "4",
+//   },
+//   {
+//     question: "What is 2 + 2?",
+//     options: ["3", "4", "5", "6"],
+//     correctAnswer: "4",
+//   },
+//   // Add more questions as needed
+// ];
 const quizData = [
   {
-    question: "What is the capital of France?",
-    options: ["London", "Paris", "Berlin", "Madrid"],
-    correctAnswer: "Paris",
+      "question": "what is the correct syntax for body tag opening?",
+      "options": [
+          "body",
+          "<body>",
+          "<body/>"
+      ],
+      "correctAnswer": "<body>"
   },
   {
-    question: "What is 2 + 2?",
-    options: ["3", "4", "5", "6"],
-    correctAnswer: "4",
-  },
-  {
-    question: "What is 2 + 2?",
-    options: ["3", "4", "5", "6"],
-    correctAnswer: "4",
-  },
-  // Add more questions as needed
-];
-
+      "question": "what is the correct syntax for input tag opening?",
+      "options": [
+          "input ",
+          "<input>",
+          "<input/>"
+      ],
+      "correctAnswer": "<input>"
+  }
+]
 const Quiz = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);

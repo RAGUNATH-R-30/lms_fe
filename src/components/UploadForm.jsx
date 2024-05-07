@@ -211,7 +211,10 @@ function UploadForm() {
       name: title,
       description: description,
       sections: sections,
-      price:price
+      price:price,
+      section1length:sections[0].sectionContent.length,
+      section2length:sections[1].sectionContent.length,
+      section3length:sections[2].sectionContent.length
     };
     console.log(course);
 

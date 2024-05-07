@@ -54,7 +54,7 @@ getVideoUrl(activeContent.id)
 
     return (
         <>
-            <video  src={url}  width = "1000" height="600" controls>
+            <video  src={url}  width = "100%" height="600" controls>
                 {/* <source src={url} type="video/mp4" /> */}
             </video>
             {/* <button onClick={() => changeVideo("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4")}>Change Video</button> */}
