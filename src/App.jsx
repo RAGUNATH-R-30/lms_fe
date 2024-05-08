@@ -25,6 +25,8 @@ import Success from './components/success'
 import success from './components/success'
 import Failure from './components/Failure'
 import Quizupload from './components/Quizupload'
+import Adminsignin from './components/Adminsignin'
+import Adminregister from './components/Adminregister'
 
 
 
@@ -51,7 +53,14 @@ const router = createBrowserRouter([
     path:"/mentorlogin",
     element:<Mentorsignin/>
   },
-
+  {
+    path:"/adminlogin",
+    element:<Adminsignin/>
+  },
+  {
+    path:"/adminregister",
+    element:<Adminregister/>
+  },
   {
     path:'dashboard',
     element:<Dashboardnav/>,

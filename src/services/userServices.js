@@ -21,6 +21,13 @@ const userServices = {
     },
     getCurrentMentor:async()=>{
         return await protectedInstance.get('users/mentorme')
+    },
+    adminRegister:async(email,username,password)=>{
+        console.log(email)
+        return await instance.post('/users/adminregister',{email,username,password})
+    },
+    adminLogin:async(email,password)=>{
+        return await instance.post('users/adminlogin',{email,password},{ withCredentials: true })
     }
 
 }
