@@ -1,29 +1,49 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useLocation, useParams } from "react-router-dom";
+import courseServices from "../services/courseServices";
+import userServices from "../services/userServices";
 
 
 const Quiz = () => {
+  const {id} =  useParams();
+  const location = useLocation();
+  const { item ,section ,course_id  } = location.state;
+  const [quizData,setQuizdata] = useState([])
+  const [user_id,setuser_id] = useState("")
 
-  const quizData = [
-  {
-      "question": "what is the correct syntax for body tag opening?",
-      "options": [
-          "body",
-          "<body>",
-          "<body/>"
-      ],
-      "correctAnswer": "<body>"
-  },
-  {
-      "question": "what is the correct syntax for input tag opening?",
-      "options": [
-          "input ",
-          "<input>",
-          "<input/>"
-      ],
-      "correctAnswer": "<input>"
-  }
-]
+  console.log(user_id)
+  console.log(item)
+  console.log(section)
+  // console.log(index)
+  // console.log(location)
+  // console.log(item)
+  // console.log(something)
+  // console.log(location.state.dummy)
+  // const data = location.state.item
+  // console.log(location)
+  // const{dummy} = location.state;
+  // console.log(dummy)
+//   const quizData = [
+//   {
+//       "question": "what is the correct syntax for body tag opening?",
+//       "options": [
+//           "body",
+//           "<body>",
+//           "<body/>"
+//       ],
+//       "correctAnswer": "<body>"
+//   },
+//   {
+//       "question": "what is the correct syntax for input tag opening?",
+//       "options": [
+//           "input ",
+//           "<input>",
+//           "<input/>"
+//       ],
+//       "correctAnswer": "<input>"
+//   }
+// ]
   const [answers, setAnswers] = useState(Array(quizData.length).fill('')); // Store selected answers
   const [showResult, setShowResult] = useState(false);
 
@@ -33,8 +53,34 @@ const Quiz = () => {
     setAnswers(newAnswers);
   };
 
-  const handleSubmit = () => {
-    setShowResult(true);
+  const handleSubmit = async() => {
+    const score = answers.filter(
+      (answer, index) => answer === quizData[index].correctAnswer
+    ).length;
+    console.log(score)
+    if(score == quizData.length){
+
+      if (section=="Section 1"){
+        console.log(user_id,item.id,course_id)
+        const quizAnswerupdate = await courseServices.updateQuizanswer({user_id:user_id,course_id:course_id,quiz_id:item.id,section:"Section 1"})
+        console.log(quizAnswerupdate)
+      }
+      if (section=="Section 2"){
+        const quizAnswerupdate = await courseServices.updateQuizanswer({user_id:user_id,course_id:course_id,quiz_id:item.id,section:"Section 2"})
+        console.log(quizAnswerupdate)
+
+      }
+      if (section=="Section 3"){
+        const quizAnswerupdate = await courseServices.updateQuizanswer({user_id:user_id,course_id:course_id,quiz_id:item.id,section:"Section 3"})
+        console.log(quizAnswerupdate)
+
+      }
+      
+    }
+    else{
+      setShowResult(true);
+    }
+    
     // You can add more sophisticated scoring logic here if needed
   };
 
@@ -43,8 +89,26 @@ const Quiz = () => {
     setShowResult(false);
   };
 
+const getQuiz= async(id)=>{
+const quiz = await courseServices.getQuiz({id:id})
+setQuizdata(quiz.data.quiz.quiz)
+console.log(quiz)
+}
+const getuser=async()=> {
+  // get the currently logged in user
+  const user = await userServices.getCurrentuser();
+  console.log(user.data.user._id)
+  setuser_id(user.data.user._id)
+  // console.log(user);
+  // return the user data
+}
+  useEffect(()=>{
+    getQuiz(id),
+    getuser()
+  },[user_id])
   return (
     <div className="container">
+      {id}
       <div className="row justify-content-center mt-5">
         <div className="col-md-8">
           <div className="card">

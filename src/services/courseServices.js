@@ -51,6 +51,13 @@ const courseServices = {
     },
     getUserprogress:async(values)=>{
         return await protectedInstance.post('users/course/getuserprogress',values)
+    },
+    getQuiz:async(values)=>{
+        return await protectedInstance.post('users/course/getquiz',values)
+    },
+    updateQuizanswer:async(values)=>{
+        console.log(values)
+        return await protectedInstance.post('users/course/updatequizanswer',values)
     }
     
 }

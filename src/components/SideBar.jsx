@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import courseServices from "../services/courseServices";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { useSelector } from "react-redux";
 import userServices from "../services/userServices";
@@ -12,7 +12,8 @@ function SideBar({ setActivecontent }) {
   const [course, setcourse] = useState([]);
   const [sections, setsections] = useState([]);
   const [sectionprogress, setsectionprogress] = useState([]);
-  const [quizprogress,setquizprogress] = useState("")
+  const [quizprogress, setquizprogress] = useState("");
+  const dummy = "dummy Check"
 
   let user_id = "";
   const data = useSelector((state) => state.app);
@@ -41,13 +42,14 @@ function SideBar({ setActivecontent }) {
   const getprogress = async (course_id) => {
     const user = await userServices.getCurrentuser();
     user_id = user.data.user._id;
+    console.log(user_id)
     const userProgress = await courseServices.getUserprogress({
       user_id: user_id,
       course_id: course_id,
     });
-    
-    setquizprogress(userProgress.data.userprogress.quiz_progress)
-    
+
+    setquizprogress(userProgress.data.userprogress.quiz_progress);
+
     const section1progress =
       userProgress.data.userprogress.section_1_progress.reduce(
         (acc, curr) => acc + curr,
@@ -102,14 +104,15 @@ function SideBar({ setActivecontent }) {
                 className="accordion-collapse collapse"
                 data-bs-parent="#accordionFlushExample"
               >
-                {item.sectionContent.map((item, index) => {
-                  console.log(quizprogress[item.id])
+                {item.sectionContent.map((sectionitem, index) => {
+                  console.log(quizprogress[sectionitem.id]);
+                  console.log(user_id)
                   return (
                     <div
                       className="accordion-body"
                       key={index}
                       onClick={() => {
-                        setActivecontent(item);
+                        setActivecontent(sectionitem);
                       }}
                     >
                       <div
@@ -121,21 +124,46 @@ function SideBar({ setActivecontent }) {
                         }}
                       >
                         <div>
-                          {
-                            quizprogress[item.id]?( <span>{item.content}</span>):( <span><FontAwesomeIcon icon={faCircleCheck} style={{color:"green"}}/>{item.content}</span>)
-                          }
-                         
-                          </div>
+                          {quizprogress[sectionitem.id] ? (
+                            <span>{sectionitem.content}</span>
+                          ) : (
+                            <span>
+                              <FontAwesomeIcon
+                                icon={faCircleCheck}
+                                style={{ color: "green" }}
+                              />
+                              {sectionitem.content}
+                            </span>
+                          )}
+                        </div>
                         <div>
-                        {quizprogress[item.id]?(<button type="button" className="btn btn-primary"
-                        onClick={(e)=>{
-                          e.preventDefault();
-                          e.stopPropagation();
-                          console.log(item.id)
-                        }}>
-                          Take Quiz
-                        </button>):(<button type="button" className="btn btn-light" disabled>Quiz completed</button>
-)}
+                          {quizprogress[sectionitem.id] ? (
+                            <Link
+                            to={
+                              `/quiz/${sectionitem.id}`
+                            }
+                            state={{something:"something",item:sectionitem,section: item.sectionName,user_id:user_id,course_id:id}}
+
+                              // type="button"
+                              className="btn btn-primary"
+                              // onClick={(e) => {
+                              //   e.preventDefault();
+                              //   e.stopPropagation();
+                              //   console.log(item.id);
+
+                              // }}
+                            >
+                              Take Quiz
+                            </Link>
+                          ) : (
+                            <button
+                              type="button"
+                              className="btn btn-light"
+                              disabled
+                            >
+                              Quiz completed
+                            </button>
+                          )}
                         </div>
                       </div>
                     </div>

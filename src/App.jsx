@@ -113,7 +113,7 @@ const router = createBrowserRouter([
     loader:currentuserLoader
   },
   {
-    path:'quiz',
+    path:'quiz/:id',
     element:<Quiz/>
   },
   {
