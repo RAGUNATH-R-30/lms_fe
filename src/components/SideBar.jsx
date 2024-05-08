@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import courseServices from "../services/courseServices";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { useSelector } from "react-redux";
 import userServices from "../services/userServices";
+import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 
 function SideBar({ setActivecontent }) {
   const { id } = useParams();
   const [course, setcourse] = useState([]);
   const [sections, setsections] = useState([]);
   const [sectionprogress, setsectionprogress] = useState([]);
+  const [quizprogress,setquizprogress] = useState("")
 
   let user_id = "";
   const data = useSelector((state) => state.app);
@@ -42,6 +45,9 @@ function SideBar({ setActivecontent }) {
       user_id: user_id,
       course_id: course_id,
     });
+    
+    setquizprogress(userProgress.data.userprogress.quiz_progress)
+    
     const section1progress =
       userProgress.data.userprogress.section_1_progress.reduce(
         (acc, curr) => acc + curr,
@@ -97,6 +103,7 @@ function SideBar({ setActivecontent }) {
                 data-bs-parent="#accordionFlushExample"
               >
                 {item.sectionContent.map((item, index) => {
+                  console.log(quizprogress[item.id])
                   return (
                     <div
                       className="accordion-body"
@@ -113,16 +120,22 @@ function SideBar({ setActivecontent }) {
                           alignItems: "center",
                         }}
                       >
-                        <div>{item.content}</div>
                         <div>
-                        <button type="button" className="btn btn-primary"
+                          {
+                            quizprogress[item.id]?( <span>{item.content}</span>):( <span><FontAwesomeIcon icon={faCircleCheck} style={{color:"green"}}/>{item.content}</span>)
+                          }
+                         
+                          </div>
+                        <div>
+                        {quizprogress[item.id]?(<button type="button" className="btn btn-primary"
                         onClick={(e)=>{
                           e.preventDefault();
                           e.stopPropagation();
                           console.log(item.id)
                         }}>
                           Take Quiz
-                        </button>
+                        </button>):(<button type="button" className="btn btn-light" disabled>Quiz completed</button>
+)}
                         </div>
                       </div>
                     </div>
