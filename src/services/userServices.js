@@ -28,7 +28,13 @@ const userServices = {
     },
     adminLogin:async(email,password)=>{
         return await instance.post('users/adminlogin',{email,password},{ withCredentials: true })
-    }
+    },
+    requestMentor:async(values)=>{
+        return await protectedInstance.post('users/requestmentor',values)
+    },
+    getmentorRequests:async(values)=>{
+        return await protectedInstance.get('users/getmentorrequests')
+    },
 
 }
 export default userServices

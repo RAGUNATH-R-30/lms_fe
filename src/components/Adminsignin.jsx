@@ -34,7 +34,7 @@ function Adminsignin() {
               console.log(response.data.token)
               // Cookies.set('token',response.data.token)
             showToast(response.data.message);
-            navigate('/dashboard')
+            navigate('/admindashboard')
             setprogress(false);
           })
           .catch((error) => {

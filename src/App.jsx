@@ -27,6 +27,8 @@ import Failure from './components/Failure'
 import Quizupload from './components/Quizupload'
 import Adminsignin from './components/Adminsignin'
 import Adminregister from './components/Adminregister'
+import AdminDashboardnav from './wrappers/AdminDashboardnav'
+import MentorRequests from './components/MentorRequests'
 
 
 
@@ -136,8 +138,21 @@ const router = createBrowserRouter([
   {
     path:'/quizupload/:id',
     element:<Quizupload/>
-  }
-
+  },
+{
+  path:'admindashboard',
+  element:<AdminDashboardnav/>,
+ children:[
+  {
+    path:'',
+    element:<MentorRequests/>
+  },
+  {
+    path:'mentorrequests',
+    element:<MentorRequests/>
+  },
+ ]
+}
  
 ])
 
