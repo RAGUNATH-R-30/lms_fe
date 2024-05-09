@@ -95,8 +95,14 @@ function SideBar({ setActivecontent }) {
                   aria-controls={`flush-collapse${index}`}
                 >
                   {item.sectionName}
-                  <h6>{`${sectionprogress[index]}%`}</h6>
+
+                 
+
                 </button>
+                <div className="d-flex justify-content-end">
+                <h6 >{`Progress: ${sectionprogress[index]}%`}</h6>
+                </div>
+                
               </h2>
 
               <div

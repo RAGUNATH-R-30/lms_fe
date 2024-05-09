@@ -36,7 +36,7 @@ function VideoPage() {
   })
   return (
     <>
-      <div>{id}</div>
+      {/* <div>{id}</div> */}
       <div className="container">
         <div className="row">
           <div className="col-lg-12 col-md-11 mt-3 ">
