@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import courseServices from "../services/courseServices";
 
-function Quizmodal({ modalclose, contentid }) {
+function Quizmodal({ modalclose, contentid,section,fetchdata }) {
   const [showmodal, setshowmodal] = useState(true);
   const [questions, setQuestions] = useState([
     { id: 1, question: "", options: ["", "", ""], answer: "" },
@@ -64,10 +64,12 @@ function Quizmodal({ modalclose, contentid }) {
       const quiz = await courseServices.createQuiz({
         content_id: contentid,
         quiz: quizData,
+        section:section
       });
       console.log(quiz.data);
       setquizsuccess(true);
       setquizfooter(false)
+      fetchdata()
     } catch (error) {
       console.log(error);
     }
@@ -75,6 +77,7 @@ function Quizmodal({ modalclose, contentid }) {
 
   return (
     <>
+    <h6>{section}</h6>
       <form onSubmit={handleSubmit}>
         <div
           className={showmodal ? "modal fade show" : "modal fade"}
@@ -222,6 +225,14 @@ function Quizmodal({ modalclose, contentid }) {
 }
 
 export default Quizmodal;
+
+
+
+
+
+
+
+
 
 // import React, { useState } from "react";
 

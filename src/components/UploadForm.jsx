@@ -195,14 +195,14 @@ function UploadForm() {
     ];
 
     const section1_values = arr.map((items) => {
-      sections[0].sectionContent.push({ id: uuidv4(), content: items.value });
+      sections[0].sectionContent.push({ id: uuidv4(), content: items.value,isQuizcreated:false });
     });
 
     const section2_values = interarr.map((items) => {
-      sections[1].sectionContent.push({ id: uuidv4(), content: items.value });
+      sections[1].sectionContent.push({ id: uuidv4(), content: items.value ,isQuizcreated:false});
     });
     const section3_values = advancearr.map((items) => {
-      sections[2].sectionContent.push({ id: uuidv4(), content: items.value });
+      sections[2].sectionContent.push({ id: uuidv4(), content: items.value,isQuizcreated:false });
     });
 
     let course = {

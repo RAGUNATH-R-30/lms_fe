@@ -13,8 +13,10 @@ function Quizupload() {
     const [loading, setloading] = useState(true);
     const [modalstate, setshowmodal] = useState(false);
     const [contentid,setcontentid] = useState("")
+    const [section,setsection] = useState("");
     // console.log(data)
-    const course = data?.course;
+    const [course,setcourse] = useState({});
+    // const course = data?.course;
     const { id } = useParams();
     const nextpage = ()=>{
         showToast("Course Created Successfully!")
@@ -30,34 +32,50 @@ function Quizupload() {
     const handleClick = async () => {
       
     };
+
+    const fetchData = async () => {
+      console.log("fetchdata");
+      console.log(data.course);
+      try {
+        // Fetch course data or perform any async operation
+        // console.log("effect")
+        setloading(true);
+        const response = await courseServices.getCoursebyId({
+          course_id: id,
+        });
+        const currentCourse = response.data.course;
+        setcourse(currentCourse)
+        // dispatch(setcourse(currentCourse));
+        // console.log(currentCourse);
+        setloading(false);
+        // Update state or do something with the data
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+      // if (Object.keys(data.course).length == 0) {
+      //   console.log("course");
+      //   try {
+      //     // Fetch course data or perform any async operation
+      //     // console.log("effect")
+      //     setloading(true);
+      //     const response = await courseServices.getCoursebyId({
+      //       course_id: id,
+      //     });
+      //     const currentCourse = response.data.course;
+      //     dispatch(setcourse(currentCourse));
+      //     // console.log(currentCourse);
+      //     setloading(false);
+      //     // Update state or do something with the data
+      //   } catch (error) {
+      //     console.error("Error fetching data:", error);
+      //   }
+      // } else {
+      //   setloading(false);
+      // }
+    };
   
     useEffect(() => {
       console.log("effect");
-      const fetchData = async () => {
-        console.log("fetchdata");
-        console.log(data.course);
-        if (Object.keys(data.course).length == 0) {
-          console.log("course");
-          try {
-            // Fetch course data or perform any async operation
-            // console.log("effect")
-            setloading(true);
-            const response = await courseServices.getCoursebyId({
-              course_id: id,
-            });
-            const currentCourse = response.data.course;
-            dispatch(setcourse(currentCourse));
-            // console.log(currentCourse);
-            setloading(false);
-            // Update state or do something with the data
-          } catch (error) {
-            console.error("Error fetching data:", error);
-          }
-        } else {
-          setloading(false);
-        }
-      };
-  
       fetchData();
     }, [data.course, id]);
     return (
@@ -97,17 +115,30 @@ function Quizupload() {
                         
                         <div className="col-lg-5">
                           <div className="card-body">
-                            <button
-                              type="submit"
+                          {item.isQuizcreated?(<button
+                              type="button"
                               className="btn btn-primary"
+                              disabled
                               onClick={() => {
+                                setsection("Section 2")
                                 setshowmodal(true)
                                 setcontentid(item.id)
                             }}
 
-                              >
+                            >
                                 Create Quiz
-                            </button>
+                            </button>):( <button
+                              type="button"
+                              className="btn btn-primary"
+                              onClick={() => {
+                                setsection("Section 2")
+                                setshowmodal(true)
+                                setcontentid(item.id)
+                            }}
+
+                            >
+                                Create Quiz
+                            </button>)}
                           </div>
                         </div>
                       </div>
@@ -136,17 +167,30 @@ function Quizupload() {
   
                         <div className="col-lg-2">
                           <div className="card-body">
-                            <button
+                           {item.isQuizcreated?(<button
                               type="button"
                               className="btn btn-primary"
+                              disabled
                               onClick={() => {
+                                setsection("Section 2")
                                 setshowmodal(true)
                                 setcontentid(item.id)
                             }}
 
                             >
                                 Create Quiz
-                            </button>
+                            </button>):( <button
+                              type="button"
+                              className="btn btn-primary"
+                              onClick={() => {
+                                setsection("Section 2")
+                                setshowmodal(true)
+                                setcontentid(item.id)
+                            }}
+
+                            >
+                                Create Quiz
+                            </button>)}
                           </div>
                         </div>
                       </div>
@@ -175,16 +219,30 @@ function Quizupload() {
   
                         <div className="col-lg-2">
                           <div className="card-body">
-                            <button
+                          {item.isQuizcreated?(<button
+                              type="button"
+                              className="btn btn-primary"
+                              disabled
+                              onClick={() => {
+                                setsection("Section 2")
+                                setshowmodal(true)
+                                setcontentid(item.id)
+                            }}
+
+                            >
+                                Create Quiz
+                            </button>):( <button
                               type="button"
                               className="btn btn-primary"
                               onClick={() => {
+                                setsection("Section 2")
                                 setshowmodal(true)
                                 setcontentid(item.id)
-                              }}
+                            }}
+
                             >
-                              Create Quiz
-                            </button>
+                                Create Quiz
+                            </button>)}
                           </div>
                         </div>
                       </div>
@@ -195,7 +253,7 @@ function Quizupload() {
             </div>
           </div>
         )}
-      {modalstate && <Quizmodal modalclose={modalclose} contentid={contentid} />}
+      {modalstate && <Quizmodal modalclose={modalclose} contentid={contentid} section={section} fetchdata={fetchData}/>}
         <div className="row mt-4">
           <div className="text-center">
             <button type="button" className="btn btn-primary mb-4" onClick={()=>{nextpage()}}>
