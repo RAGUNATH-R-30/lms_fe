@@ -1,8 +1,8 @@
 import axios from "axios"
 
-const baseURL = 'http://localhost:3001/api'
+// const baseURL = 'http://localhost:3001/api'
 
-// const baseURL = 'https://lms-api-7wf7.onrender.com/api'
+const baseURL = 'https://ragunath-lms.netlify.app/api'
 
 const instance = axios.create({
     baseURL,
