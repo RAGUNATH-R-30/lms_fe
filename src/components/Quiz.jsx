@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import courseServices from "../services/courseServices";
 import userServices from "../services/userServices";
+import { ToastManager, showToast } from "./ToastManager";
 
 
 const Quiz = () => {
@@ -11,7 +12,7 @@ const Quiz = () => {
   const { item ,section ,course_id  } = location.state;
   const [quizData,setQuizdata] = useState([])
   const [user_id,setuser_id] = useState("")
-
+  const navigate = useNavigate();
   console.log(user_id)
   console.log(item)
   console.log(section)
@@ -54,32 +55,56 @@ const Quiz = () => {
   };
 
   const handleSubmit = async() => {
-    const score = answers.filter(
-      (answer, index) => answer === quizData[index].correctAnswer
-    ).length;
-    console.log(score)
-    if(score == quizData.length){
+    try {
+      const score = answers.filter(
+        (answer, index) => answer === quizData[index].correctAnswer
+      ).length;
+      console.log(score)
+  
+      if(score == quizData.length){
+  
+        if (section=="Section 1"){
+          console.log(user_id,item.id,course_id)
+          const quizAnswerupdate = await courseServices.updateQuizanswer({user_id:user_id,course_id:course_id,quiz_id:item.id,section:"Section 1"})
+          setTimeout(()=>{
+            showToast("Answered")
 
-      if (section=="Section 1"){
-        console.log(user_id,item.id,course_id)
-        const quizAnswerupdate = await courseServices.updateQuizanswer({user_id:user_id,course_id:course_id,quiz_id:item.id,section:"Section 1"})
-        console.log(quizAnswerupdate)
-      }
-      if (section=="Section 2"){
-        const quizAnswerupdate = await courseServices.updateQuizanswer({user_id:user_id,course_id:course_id,quiz_id:item.id,section:"Section 2"})
-        console.log(quizAnswerupdate)
+          },500)
+          navigate(-1)
+          
+          console.log(quizAnswerupdate)
+        }
+        if (section=="Section 2"){
+          const quizAnswerupdate = await courseServices.updateQuizanswer({user_id:user_id,course_id:course_id,quiz_id:item.id,section:"Section 2"})
+          setTimeout(()=>{
+            showToast("Answered")
 
-      }
-      if (section=="Section 3"){
-        const quizAnswerupdate = await courseServices.updateQuizanswer({user_id:user_id,course_id:course_id,quiz_id:item.id,section:"Section 3"})
-        console.log(quizAnswerupdate)
+          },500)
+          navigate(-1)
+          console.log(quizAnswerupdate)
+  
+        }
+        if (section=="Section 3"){
+          const quizAnswerupdate = await courseServices.updateQuizanswer({user_id:user_id,course_id:course_id,quiz_id:item.id,section:"Section 3"})
+          showToast("Answered")
 
+          setTimeout(()=>{
+            navigate(-1)
+
+          },900)
+
+          console.log(quizAnswerupdate)
+  
+        }
+        
       }
-      
+      else{
+        setShowResult(true);
+      }
+    } catch (error) {
+      console.log(error)
     }
-    else{
-      setShowResult(true);
-    }
+    
     
     // You can add more sophisticated scoring logic here if needed
   };
@@ -107,8 +132,10 @@ const getuser=async()=> {
     getuser()
   },[user_id])
   return (
+    <>
+    <ToastManager></ToastManager>
     <div className="container">
-      {id}
+      {/* {id} */}
       <div className="row justify-content-center mt-5">
         <div className="col-md-8">
           <div className="card">
@@ -167,6 +194,8 @@ const getuser=async()=> {
         </div>
       </div>
     </div>
+    </>
+    
   );
 };
 
