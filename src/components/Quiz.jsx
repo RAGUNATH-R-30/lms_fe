@@ -66,32 +66,29 @@ const Quiz = () => {
         if (section=="Section 1"){
           console.log(user_id,item.id,course_id)
           const quizAnswerupdate = await courseServices.updateQuizanswer({user_id:user_id,course_id:course_id,quiz_id:item.id,section:"Section 1"})
+          showToast("Answered")
           setTimeout(()=>{
-            showToast("Answered")
-
-          },500)
-          navigate(-1)
+            navigate(-1)
+          },700)
+    
           
           console.log(quizAnswerupdate)
         }
         if (section=="Section 2"){
           const quizAnswerupdate = await courseServices.updateQuizanswer({user_id:user_id,course_id:course_id,quiz_id:item.id,section:"Section 2"})
+          showToast("Answered")
           setTimeout(()=>{
-            showToast("Answered")
-
-          },500)
-          navigate(-1)
+            navigate(-1)
+          },700)
           console.log(quizAnswerupdate)
   
         }
         if (section=="Section 3"){
           const quizAnswerupdate = await courseServices.updateQuizanswer({user_id:user_id,course_id:course_id,quiz_id:item.id,section:"Section 3"})
           showToast("Answered")
-
           setTimeout(()=>{
             navigate(-1)
-
-          },900)
+          },700)
 
           console.log(quizAnswerupdate)
   
