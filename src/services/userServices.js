@@ -38,6 +38,9 @@ const userServices = {
     updatementorRequests:async(values)=>{
         return await protectedInstance.post('users/mentorregisterupdate',values)
     },
+    getUserrequest:async(values)=>{
+        return await protectedInstance.post('users/getuserrequest',values)
+    }
 
 }
 export default userServices

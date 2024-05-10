@@ -29,6 +29,7 @@ import Adminsignin from './components/Adminsignin'
 import Adminregister from './components/Adminregister'
 import AdminDashboardnav from './wrappers/AdminDashboardnav'
 import MentorRequests from './components/MentorRequests'
+import Myrequests from './components/Myrequests'
 
 
 
@@ -116,6 +117,10 @@ const router = createBrowserRouter([
         element:<UserMyCourses/>,
         loader: usercoursesLoader,
       },
+      {
+        path:'myrequests',
+        element:<Myrequests/>
+      }
     ]
   },
   {

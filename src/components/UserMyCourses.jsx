@@ -30,7 +30,9 @@ function UserMyCourses() {
   return (
     <>
     <div className="container mt-4">
-        <div className="row">
+
+
+        {userCourses.length == 0?(<div className='text-center'style={{fontSize:20}}>No Course Available.</div>):(<div className="row">
           {userCourses?.map((item, index) => {
             return (
               <div className="col-lg-4" key={index}>
@@ -49,7 +51,7 @@ function UserMyCourses() {
               </div>
             );
           })}
-        </div>
+        </div>)}
       </div>
     </>
   )

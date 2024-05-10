@@ -40,7 +40,7 @@ function MyCourses() {
       console.log(error)
     }
   }
-
+console.log(data.mycourses.length)
   useEffect(() => {
     // if (data.mycourses.length == 0) {
       getCourses();
@@ -49,7 +49,8 @@ function MyCourses() {
   return (
     <>
       <div className="container">
-        <div className="row mt-4">
+
+        {data.mycourses.length == 0?(<div className='text-center mt-4'style={{fontSize:20}}>No Courses available</div>):(<div className="row mt-4">
 
           {
             data.mycourses.map((item,index)=>{
@@ -70,7 +71,7 @@ function MyCourses() {
           }
 
 
-        </div>
+        </div>)}
       </div>
     </>
   );

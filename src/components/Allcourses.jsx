@@ -33,7 +33,8 @@ function Allcourses() {
   return (
     <>
       <div className="container mt-4">
-        <div className="row">
+
+        {data.allcourses.length==0?(<div className='text-center mt-4'style={{fontSize:20}}>No Course Available.</div>):(<div className="row">
           {data?.allcourses.map((item, index) => {
             return (
               <div className="col-lg-4" key={index}>
@@ -55,7 +56,7 @@ function Allcourses() {
               </div>
             );
           })}
-        </div>
+        </div>)}
       </div>
     </>
   );

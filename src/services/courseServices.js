@@ -58,7 +58,8 @@ const courseServices = {
     updateQuizanswer:async(values)=>{
         console.log(values)
         return await protectedInstance.post('users/course/updatequizanswer',values)
-    }
+    },
+    
     
 }
 export default courseServices;

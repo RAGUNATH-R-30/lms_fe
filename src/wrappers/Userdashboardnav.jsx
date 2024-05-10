@@ -43,6 +43,11 @@ function Userdashboardnav() {
                   MyCourses
                 </Link>
               </li>
+              <li className="nav-item">
+                <Link className="nav-link" to={"myrequests"}>
+                  MyRequests
+                </Link>
+              </li>
             </ul>
 
 
