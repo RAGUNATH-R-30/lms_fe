@@ -4,6 +4,7 @@ import courseServices from "../services/courseServices";
 import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 import userServices from "../services/userServices";
 import { setcourse } from "../../reducers/courseSlice";
+import CircularProgress from "./CircularProgress";
 
 // export async function loader() {
 //   // get the currently logged in user
@@ -46,6 +47,7 @@ function UploadVideo() {
   const [loading, setloading] = useState(true);
   const [selectedFiles, setSelectedFiles] = useState({});
   const [uploadedVideos, setUploadedVideos] = useState({});
+  const [uploadingVideos, setUploadingVideos] = useState({});
   // console.log(data)
   const course = data?.course;
   const { id } = useParams();
@@ -73,9 +75,9 @@ function UploadVideo() {
   //   setSelectedFile(e.target.files);
   //   console.log(selectedFile)
   // };
-  const nextpage = ()=>{
-    navigate(`/quizupload/${id}`)
-  }
+  const nextpage = () => {
+    navigate(`/quizupload/${id}`);
+  };
   const handleFileChange = (e, sectionId) => {
     console.log(sectionId);
     setSelectedFiles({
@@ -89,6 +91,10 @@ function UploadVideo() {
       alert("Choose file");
     } else {
       try {
+        setUploadingVideos({
+          ...uploadingVideos,
+          [sectionId]: true,
+        });
         const formData = new FormData();
         console.log(file.name);
         formData.append("video", file);
@@ -103,7 +109,13 @@ function UploadVideo() {
         });
         console.log(response.data.message);
       } catch (error) {
-        console.log(error.response.data.message);
+        console.log(error);
+      } finally {
+        // Reset uploading state after upload completes (either success or failure)
+        setUploadingVideos({
+          ...uploadingVideos,
+          [sectionId]: false,
+        });
       }
     }
   };
@@ -184,17 +196,21 @@ function UploadVideo() {
                       </div>
                       <div className="col-lg-2">
                         <div className="card-body">
-                          <button
-                            type="submit"
-                            className="btn btn-primary"
-                            // onClick={() => handleClick(item.id)}
-                            onClick={() => handleClick(item.id)}
-                            disabled={uploadedVideos[item.id]}
-                          >
-                            {uploadedVideos[item.id]
-                              ? "Video Uploaded"
-                              : "Upload Video"}
-                          </button>
+                          {uploadingVideos[item.id] ? (
+                            <CircularProgress />
+                          ) : (
+                            <button
+                              type="submit"
+                              className="btn btn-primary"
+                              // onClick={() => handleClick(item.id)}
+                              onClick={() => handleClick(item.id)}
+                              disabled={uploadedVideos[item.id]}
+                            >
+                              {uploadedVideos[item.id]
+                                ? "Video Uploaded"
+                                : "Upload Video"}
+                            </button>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -233,16 +249,20 @@ function UploadVideo() {
 
                       <div className="col-lg-2">
                         <div className="card-body">
-                          <button
-                            type="button"
-                            className="btn btn-primary"
-                            onClick={() => handleClick(item.id)}
-                            disabled={uploadedVideos[item.id]}
-                          >
-                            {uploadedVideos[item.id]
-                              ? "Video Uploaded"
-                              : "Upload Video"}
-                          </button>
+                          {uploadingVideos[item.id] ? (
+                            <CircularProgress />
+                          ) : (
+                            <button
+                              type="button"
+                              className="btn btn-primary"
+                              onClick={() => handleClick(item.id)}
+                              disabled={uploadedVideos[item.id]}
+                            >
+                              {uploadedVideos[item.id]
+                                ? "Video Uploaded"
+                                : "Upload Video"}
+                            </button>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -281,16 +301,20 @@ function UploadVideo() {
 
                       <div className="col-lg-2">
                         <div className="card-body">
-                          <button
-                            type="button"
-                            className="btn btn-primary"
-                            onClick={() => handleClick(item.id)}
-                            disabled={uploadedVideos[item.id]}
-                          >
-                            {uploadedVideos[item.id]
-                              ? "Video Uploaded"
-                              : "Upload Video"}
-                          </button>
+                          {uploadingVideos[item.id] ? (
+                            <CircularProgress />
+                          ) : (
+                            <button
+                              type="button"
+                              className="btn btn-primary"
+                              onClick={() => handleClick(item.id)}
+                              disabled={uploadedVideos[item.id]}
+                            >
+                              {uploadedVideos[item.id]
+                                ? "Video Uploaded"
+                                : "Upload Video"}
+                            </button>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -304,7 +328,13 @@ function UploadVideo() {
 
       <div className="row mt-4">
         <div className="text-center">
-          <button type="button" className="btn btn-primary mb-4" onClick={()=>{nextpage()}}>
+          <button
+            type="button"
+            className="btn btn-primary mb-4"
+            onClick={() => {
+              nextpage();
+            }}
+          >
             Next
           </button>
         </div>
