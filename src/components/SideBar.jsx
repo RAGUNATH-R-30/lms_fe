@@ -13,7 +13,7 @@ function SideBar({ setActivecontent }) {
   const [sections, setsections] = useState([]);
   const [sectionprogress, setsectionprogress] = useState([]);
   const [quizprogress, setquizprogress] = useState("");
-  const dummy = "dummy Check"
+  const dummy = "dummy Check";
 
   let user_id = "";
   const data = useSelector((state) => state.app);
@@ -42,7 +42,7 @@ function SideBar({ setActivecontent }) {
   const getprogress = async (course_id) => {
     const user = await userServices.getCurrentuser();
     user_id = user.data.user._id;
-    console.log(user_id)
+    console.log(user_id);
     const userProgress = await courseServices.getUserprogress({
       user_id: user_id,
       course_id: course_id,
@@ -95,14 +95,14 @@ function SideBar({ setActivecontent }) {
                   aria-controls={`flush-collapse${index}`}
                 >
                   {item.sectionName}
-
-                 
-
                 </button>
                 <div className="d-flex justify-content-end">
-                <h6 >{`Progress: ${sectionprogress[index]}%`}</h6>
+                  {sectionprogress[index] == undefined ? (
+                    ""
+                  ) : (
+                    <h6>{`Progress: ${sectionprogress[index]}%`}</h6>
+                  )}
                 </div>
-                
               </h2>
 
               <div
@@ -112,7 +112,7 @@ function SideBar({ setActivecontent }) {
               >
                 {item.sectionContent.map((sectionitem, index) => {
                   console.log(quizprogress[sectionitem.id]);
-                  console.log(user_id)
+                  console.log(user_id);
                   return (
                     <div
                       className="accordion-body"
@@ -145,11 +145,14 @@ function SideBar({ setActivecontent }) {
                         <div>
                           {quizprogress[sectionitem.id] ? (
                             <Link
-                            to={
-                              `/quiz/${sectionitem.id}`
-                            }
-                            state={{something:"something",item:sectionitem,section: item.sectionName,user_id:user_id,course_id:id}}
-
+                              to={`/quiz/${sectionitem.id}`}
+                              state={{
+                                something: "something",
+                                item: sectionitem,
+                                section: item.sectionName,
+                                user_id: user_id,
+                                course_id: id,
+                              }}
                               // type="button"
                               className="btn btn-primary"
                               // onClick={(e) => {
