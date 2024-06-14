@@ -1,5 +1,10 @@
 # Learning Management System (LMS)
 
+#Test Credentials
+adminlogin:
+email:admin@gmail.com
+password:123456
+
 Welcome to our Learning Management System (LMS) README file. This document provides an overview of the features and functionality of our platform.
 
 ## Features
